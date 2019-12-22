@@ -3,176 +3,23 @@
 {% endblock link %} {% block body %}
 <div class="container-fluid">
   <div class="row row-cols-1 row-cols-md-5">
+    {% for i in Pro %}
     <div class="col mb-4">
       <div class="card h-100">
-        <img src="{% static 'opd.jpg' %}" class="card-img-top" alt="Image not available" />
+        <img src="/media/{{ i.image }}" class="card-img-top" alt="Image not available" />
         <div class="card-body">
-          <h5 class="card-title">OPD</h5>
+          <h5 class="card-title">{{ i.Type }}</h5>
           <p class="card-text">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel consequuntur mollitia odio similique eligendi laboriosam voluptatum quaerat corrupti exercitationem?
 
           </p>
           <form action="" method="POST">
                 {% csrf_token %}
-          <input type="hidden" name="Dept_id" value="{{ 1 }}">
+          <input type="hidden" name="Dept_id" value="{{ i.Uid }}">
           <button type="submit" class="btn btn-primary">Check</button>
         </form>
         </div>
       </div>
     </div>
-    <div class="col mb-4">
-      <div class="card h-100">
-        <img src="{% static 'opd.jpg' %}" class="card-img-top" alt="Image not available" />
-        <div class="card-body">
-          <h5 class="card-title">SKIN</h5>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel consequuntur mollitia odio similique eligendi laboriosam voluptatum quaerat corrupti exercitationem?
-
-          </p>
-          <form action="" method="POST">
-                {% csrf_token %}
-          <input type="hidden" name="Dept_id" value="{{ 2 }}">
-          <button type="submit" class="btn btn-primary">Check</button>
-        </form>
-        </div>
-      </div>
-    </div>
-    <div class="col mb-4">
-      <div class="card h-100">
-        <img src="{% static 'opd.jpg' %}" class="card-img-top" alt="Image not available" />
-        <div class="card-body">
-          <h5 class="card-title">CARDIO</h5>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel consequuntur mollitia odio similique eligendi laboriosam voluptatum quaerat corrupti exercitationem?
-
-          </p>
-          <form action="" method="POST">
-                {% csrf_token %}
-          <input type="hidden" name="Dept_id" value="{{ 3 }}">
-          <button type="submit" class="btn btn-primary">Check</button>
-        </form>
-        </div>
-      </div>
-    </div>
-    <div class="col mb-4">
-      <div class="card h-100">
-        <img src="{% static 'opd.jpg' %}" class="card-img-top" alt="Image not available" />
-        <div class="card-body">
-          <h5 class="card-title">HAIR</h5>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel consequuntur mollitia odio similique eligendi laboriosam voluptatum quaerat corrupti exercitationem?
-
-          </p>
-          <form action="" method="POST">
-                {% csrf_token %}
-          <input type="hidden" name="Dept_id" value="{{ 4 }}">
-          <button type="submit" class="btn btn-primary">Check</button>
-        </form>
-        </div>
-      </div>
-    </div>
-    <div class="col mb-4">
-      <div class="card h-100">
-        <img src="{% static 'opd.jpg' %}" class="card-img-top" alt="Image not available" />
-        <div class="card-body">
-          <h5 class="card-title">NAILS</h5>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel consequuntur mollitia odio similique eligendi laboriosam voluptatum quaerat corrupti exercitationem?
-
-          </p>
-          <form action="" method="POST">
-                {% csrf_token %}
-          <input type="hidden" name="Dept_id" value="{{ 5 }}">
-          <button type="submit" class="btn btn-primary">Check</button>
-        </form>
-        </div>
-      </div>
-    </div>
-    <div class="col mb-4">
-      <div class="card h-100">
-        <img src="{% static 'opd.jpg' %}" class="card-img-top" alt="Image not available" />
-        <div class="card-body">
-          <h5 class="card-title">PHY</h5>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel consequuntur mollitia odio similique eligendi laboriosam voluptatum quaerat corrupti exercitationem?
-
-          </p>
-          <form action="" method="POST">
-                {% csrf_token %}
-          <input type="hidden" name="Dept_id" value="{{ 6 }}">
-          <button type="submit" class="btn btn-primary">Check</button>
-        </form>
-        </div>
-      </div>
-    </div>
-    <div class="col mb-4">
-      <div class="card h-100">
-        <img src="{% static 'opd.jpg' %}" class="card-img-top" alt="Image not available" />
-        <div class="card-body">
-          <h5 class="card-title">CHEM</h5>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel consequuntur mollitia odio similique eligendi laboriosam voluptatum quaerat corrupti exercitationem?
-
-          </p>
-          <form action="" method="POST">
-                {% csrf_token %}
-          <input type="hidden" name="Dept_id" value="{{ 7 }}">
-          <button type="submit" class="btn btn-primary">Check</button>
-        </form>
-        </div>
-      </div>
-    </div>
-    <div class="col mb-4">
-      <div class="card h-100">
-        <img src="{% static 'opd.jpg' %}" class="card-img-top" alt="Image not available" />
-        <div class="card-body">
-          <h5 class="card-title">SOLA</h5>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel consequuntur mollitia odio similique eligendi laboriosam voluptatum quaerat corrupti exercitationem?
-
-          </p>
-          <form action="" method="POST">
-                {% csrf_token %}
-          <input type="hidden" name="Dept_id" value="{{ 8 }}">
-          <button type="submit" class="btn btn-primary">Check</button>
-        </form>
-        </div>
-      </div>
-    </div>
-    <div class="col mb-4">
-      <div class="card h-100">
-        <img src="{% static 'opd.jpg' %}" class="card-img-top" alt="Image not available" />
-        <div class="card-body">
-          <h5 class="card-title">KALO</h5>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel consequuntur mollitia odio similique eligendi laboriosam voluptatum quaerat corrupti exercitationem?
-
-          </p>
-          <form action="" method="POST">
-                {% csrf_token %}
-          <input type="hidden" name="Dept_id" value="{{ 9 }}">
-          <button type="submit" class="btn btn-primary">Check</button>
-        </form>
-        </div>
-      </div>
-    </div>
-    <div class="col mb-4">
-      <div class="card h-100">
-        <img src="{% static 'opd.jpg' %}" class="card-img-top" alt="Image not available" />
-        <div class="card-body">
-          <h5 class="card-title">POP</h5>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel consequuntur mollitia odio similique eligendi laboriosam voluptatum quaerat corrupti exercitationem?
-
-          </p>
-          <form action="" method="POST">
-                {% csrf_token %}
-          <input type="hidden" name="Dept_id" value="{{ 10 }}">
-          <button type="submit" class="btn btn-primary">Check</button>
-        </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-{% endblock body %}
+    {% endfor %}
+{% endblock %}
