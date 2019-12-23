@@ -11,7 +11,7 @@ def Single(request):
     print(y.image)  
     params={'Pro':x}
     if request.method== "POST" :
-        No=request.POST.get('Dept_id')
+        No=request.POST.get('Dept_id') 
         return redirect('/Dept/UID='+No)
     return render(request,'Pages/Single.html',params)
 
