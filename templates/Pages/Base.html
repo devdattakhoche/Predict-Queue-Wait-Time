@@ -20,6 +20,7 @@
         {% url 'Single' as Single %}
         {% url 'Complete' as Complete %}
         {% url 'Unknown' as Unknown %}
+        {% url 'Hospitals' as Hospitals %}
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <a class="navbar-brand" href="#">Queue Wait Time Predictor</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,16 +33,16 @@
                       href="{{ Documentation }}">Documentation</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link {% if request.path == Single %}active{% endif %}"
-                      href="{{ Single }}"" href="#">Single dept</a>
+                      <a class="nav-link {% if request.path == Hospitals %}active{% endif %}"
+                      href="{{ Hospitals }}" >Hospitals</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link {% if request.path == Complete %}active{% endif %}"
-                      href="{{ Complete }}"" href="#">Complete Process</a>
+                      href="{{ Complete }}" >Complete Process</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link {% if request.path == Unknown %}active{% endif %}"
-                      href="{{ Unknown }}"" href="#">Unknown Predictions</a>
+                      href="{{ Unknown }}" >Unknown Predictions</a>
                     </li>
                   </ul>
                   </nav>
@@ -52,8 +53,8 @@
                             <p class="lead">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam dolor temporibus at quaerat ut illum quo officiis veritatis provident! Eius iusto, voluptas illum blanditiis nisi quidem aliquam? Eius, provident? Numquam!   </p>
                         </div>
                       </div>
-                            {% elif request.path == Single %}
-                            <h1 class="display-5">Individual Departments</h1>
+                            {% elif request.path == Hospitals %}
+                            <h1 class="display-5">Our Hospitals</h1>
                             <p class="lead">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam dolor temporibus at quaerat ut illum quo officiis veritatis provident! Eius iusto, voluptas illum blanditiis nisi quidem aliquam? Eius, provident? Numquam!   </p>
         </div>
       </div> 

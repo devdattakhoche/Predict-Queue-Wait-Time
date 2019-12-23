@@ -16,7 +16,7 @@ class Dept(models.Model):
     Uid=models.IntegerField(primary_key=True,unique=True,null=False,blank=False)
     Type = models.CharField(max_length=20,default='')
     image = models.ImageField(upload_to="department_images/",default="")
-    Hospital_id = models.ForeignKey(Hospital, on_delete=models.CASCADE,default=1)
+    Hospital_id = models.ForeignKey(Hospital, on_delete=models.CASCADE,default='null')
     
 
     def __str__(self):

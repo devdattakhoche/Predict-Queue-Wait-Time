@@ -1,6 +1,7 @@
-{% extends 'Pages/Base.html' %} {% load static %} {% block link %}
+{% extends 'Pages/Extended.html' %} {% load static %} {% block link %}
 <link rel="stylesheet" href="{% static 'single.css' %}" />
 {% endblock link %} {% block body %}
+
 <div class="container-fluid">
   <div class="row row-cols-1 row-cols-md-5">
     {% for i in Pro %}
@@ -21,5 +22,6 @@
         </div>
       </div>
     </div>
-    {% endfor %}
+   {% endfor %}
+
 {% endblock %}
