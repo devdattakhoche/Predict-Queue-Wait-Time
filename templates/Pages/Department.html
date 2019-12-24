@@ -1,4 +1,9 @@
 {% extends "Pages/Extended.html" %}
+{% block Hospital %}
+{{Hos.Hospital_name}}
+<br>
+<h2 class="display-6">- {{Pro.Type}}</h2>
+{%  endblock Hospital %}
 {% block body %}
   
      <div class="container-fluid my-3">
@@ -9,10 +14,14 @@
             <input type="text" class="form-control " id="validationDefault01" value="{{ Pro.Type }}" readonly>
           </div>
           <div class="col-md-4 mb-3">
-            <label for="validationDefault02">Number</label>
+            <label for="validationDefault02">Hospital Number</label>
             <input type="text" class="form-control" id="validationDefault02" value="{{Pro.Uid }}" readonly>
           </div>
           <div class="col-md-4 mb-3">
+            <label for="validationDefault02">Department Number</label>
+            <input type="text" class="form-control" id="validationDefault02" value="{{Hos.Hospital_id }}" readonly>
+          </div>
+          <!-- <div class="col-md-4 mb-3">
             <label for="validationDefaultUsername">Username</label>
             <div class="input-group">
               <div class="input-group-prepend">
@@ -21,6 +30,7 @@
               <input type="text" class="form-control" id="validationDefaultUsername"  aria-describedby="inputGroupPrepend2" required>
             </div>
           </div>
+        </div> -->
         </div>
         <div class="form-row">
           <div class="col-md-6 mb-3">
@@ -36,14 +46,14 @@
                     <option>Sunday</option>
             </select>
           </div>
-          <div class="col-md-3 mb-3">
+          <!-- <div class="col-md-3 mb-3">
             <label for="validationDefault04">Shift</label>
             <select class="custom-select" id="validationDefault04" required>
               <option disabled selected value> -- select an option -- </option>
               <option>Morning</option>
               <option>Evening</option>
             </select>
-          </div>
+          </div> -->
           <div class="col-md-3 mb-3">
             <label for="validationDefault05">Entry Time</label>
             <input type="Time" class="form-control" id="validationDefault05" required>

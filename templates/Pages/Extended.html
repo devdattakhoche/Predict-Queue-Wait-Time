@@ -77,20 +77,21 @@
     {% url 'Complete' as Complete %}
     {% url 'Unknown' as Unknown %}
     {% url 'Hospitals' as Hospitals %}
+    {% url 'Dashboard' as Dashboard %}
     <div class="d-flex" id="wrapper">
 
       <!-- Sidebar -->
+      
       <div class="bg-dark border-right" id="sidebar-wrapper">
         <div class="sidebar-heading text-light"><strong>Predict Queue time</strong></div>
         <div class="list-group list-group-flush">
-          <a href="#" class="list-group-item list-group-item-action bg-dark
-            text-secondary">Single Depts</a>
-          <a href="#" class="list-group-item list-group-item-action bg-dark
-            text-secondary">Complete Predictions</a>
-          <a href="#" class="list-group-item list-group-item-action bg-dark
-            text-secondary">Our Predictions</a>
-          <a href="#" class="list-group-item list-group-item-action bg-dark
-            text-secondary">About Hospital</a>
+          
+          <a href="{{ Single }}" class="list-group-item list-group-item-action bg-dark
+            text-secondary {% if request.path == Single %} text-light{% endif %}">Single Depts</a>
+          <a href="{{ Complete }}}" class="list-group-item list-group-item-action bg-dark
+            text-secondary {% if request.path == Complete %}text-light{% endif %}">Complete Predictions</a>
+          <a href="{{ Unknown }}" class="list-group-item list-group-item-action bg-dark
+            text-secondary {% if request.path == Predictions %}  text-light{% endif %}">Our Predictions</a>
         </div>
       </div>
       <!-- /#sidebar-wrapper -->
@@ -145,9 +146,8 @@
     </div> -->
         <div class="jumbotron jumbotron-fluid">
           <div class="container">
-            <h1 class="display-5">Fluid jumbotron</h1>
-            <p class="lead">This is a modified jumbotron that occupies the
-              entire horizontal space of its parent.</p>
+            <h1 class="display-5"> {% block Hospital %}  {% endblock Hospital %} </h1>
+            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dignissimos aut voluptatum vero. Blanditiis officia natus odio placeat minima vero quod, magnam laborum, deleniti corporis, excepturi porro quo sunt perspiciatis ea ipsa fugit nihil atque! Nobis dolore explicabo officiis voluptatibus dignissimos odit perferendis, quam iste veniam. Aperiam nihil tenetur voluptatibus! Minus rem deserunt quas illo ipsum explicabo, officia illum sed accusantium, deleniti eveniet non. Labore quaerat tempora officiis ab fuga itaque dolor, sint fugit? Qui, obcaecati! Error in eius numquam officia inventore, assumenda consectetur fugit unde quasi quidem quos ea voluptas incidunt explicabo non reiciendis excepturi quo alias asperiores autem!</p>
           </div>
         </div>
         {% block body %}

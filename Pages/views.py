@@ -21,20 +21,21 @@ def Complete(request):
 def Unknown(request):
     return render(request,'Pages/Unknown.html')
     
-def Department(request,UID):
+def Department(request,Hid,UID):
     x=Dept.objects.get(Uid=UID)
-    params={'Pro':x}
+    y=Hospital.objects.get(Hospital_id=Hid)
+    params={'Pro':x,'Hos':y}
     return render(request,'Pages/Department.html',params)
+def Dashboard(request,Hospital_id):
+    x=Hospital.objects.get(Hospital_id=Hospital_id)
+    params={'Pro':x}
+    return render(request,'Pages/Dashboard.html',params)
 
 def Hospitals(request):
     x = Hospital.objects.all()
     params={'Pro':x}
     if request.method== "POST" :
         No=request.POST.get('Hospital_id')
-        return redirect('/Single_hospital/'+No)
+        return redirect('/Dashboard/Huid-'+No)
     return render(request,'Pages/Hospitals.html',params)
 
-def Single_hospital(request,Hospital_id):
-    x=Hospital.objects.get(Hospital_id=Hospital_id)
-    params={'Pro':x}
-    return render(request,'Pages/Single_hospital.html',params)
