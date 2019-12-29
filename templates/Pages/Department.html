@@ -1,25 +1,38 @@
 {% extends "Pages/Extended.html" %}
+
 {% block Hospital %}
-{{Hos.Hospital_name}}
+{% for i in Pro %}
+{% for j in Hos %}
+{% if i.Uid == ProId and i.Hospital_id == HosId and j.Hospital_id == HosId %}
+<h2 class="display-6">{{ j.Hospital_name }}</h2>
 <br>
-<h2 class="display-6">- {{Pro.Type}}</h2>
+<h2 class="display-6">- {{ i.Type }}</h2>
+{% endif %}
+{% endfor %}
+{% endfor %}
 {%  endblock Hospital %}
+
 {% block body %}
-  
+
+{% for i in Pro %}
+{% if i.Uid == ProId %}
+{% if i.Hospital_id == HosId %}
      <div class="container-fluid my-3">
+     
+      
      <form>
         <div class="form-row">
           <div class="col-md-4 mb-3">
             <label for="validationDefault01">Department</label>
-            <input type="text" class="form-control " id="validationDefault01" value="{{ Pro.Type }}" readonly>
+            <input type="text" class="form-control " id="validationDefault01" value="{{ i.Type }}" readonly>
           </div>
           <div class="col-md-4 mb-3">
             <label for="validationDefault02">Hospital Number</label>
-            <input type="text" class="form-control" id="validationDefault02" value="{{Pro.Uid }}" readonly>
+            <input type="text" class="form-control" id="validationDefault02" value="{{ i.Hospital_id }}" readonly>
           </div>
           <div class="col-md-4 mb-3">
             <label for="validationDefault02">Department Number</label>
-            <input type="text" class="form-control" id="validationDefault02" value="{{Hos.Hospital_id }}" readonly>
+            <input type="text" class="form-control" id="validationDefault02" value="{{ i.Uid }}" readonly>
           </div>
           <!-- <div class="col-md-4 mb-3">
             <label for="validationDefaultUsername">Username</label>
@@ -61,7 +74,10 @@
         </div>
         <button class="btn btn-primary" type="submit">Submit form</button>
       </form>
-      <h4 class="my-3"><span class="badge badge-light">Your Predicted Time for {{Pro.Type}} Department is : 20</span></h4>
+      <h4 class="my-3"><span class="badge badge-light">Your Predicted Time for {{ i.Type}} Department is : 20</span></h4>
     </div>
-    
+    {% endif %}
+    {% endif %}
+    {% endfor %}
 {% endblock body %}
+
