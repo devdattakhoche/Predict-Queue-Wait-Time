@@ -1,9 +1,27 @@
-{% extends 'Pages/Base.html' %} {% load static %} {% block link %}
+{% extends 'Pages/Base.html' %}
+ {% load static %} 
+ {% load widget_tweaks %}
+ {% block link %}
 <link rel="stylesheet" href="{% static 'single.css' %}" />
 {% endblock link %} {% block body %}
 <div class="container-fluid">
+  <div class="headline headline-md"><h2>Search</h2></div>
+
+    <form method="get" action="">
+      {{ filter.form.Hospital_name.label_tag }}
+        <div class="row">
+          <div class="form-group col-sm-1 col-md-10">  
+            {% render_field filter.form.Hospital_name class="form-control" %}
+          </div>
+        <div class="form-group col-sm-2 col-md-2">
+          <input value="Search" type="Submit" class="btn btn-primary form-control" >
+        </div>
+      </div>
+    </form>
+
+
   <div class="row row-cols-1 row-cols-md-5">
-    {% for i in Pro %}
+    {% for i in filter.qs %}
     <div class="col mb-4">
       <div class="card h-100">
         <img src="/media/{{ i.image }}" class="card-img-top" alt="Image not available" />

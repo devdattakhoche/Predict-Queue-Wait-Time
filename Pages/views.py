@@ -1,13 +1,16 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from .models import Dept,Hospital
+from .filter import HospitalFilter
 
 def Documentation(request):
     return render(request,'Pages/Documentation.html')
     
 def Hospitals(request):
-    x = Hospital.objects.all()  
-    params={'Pro':x}
+    x = Hospital.objects.all()      
+    Hospital_filter = HospitalFilter(request.GET,queryset=x)
+    HospitalFilter(request.GET).data['Hospital_name'].upper()
+    params={'Pro':x,'filter':Hospital_filter}
     if request.method== "POST" :
         No=request.POST.get('Hospital_id')
         return redirect('http://localhost:8000/Hospital/'+No+'/Dashboard')
