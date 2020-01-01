@@ -7,7 +7,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import metrics
 import pandas as pd
-
+import pickle
+import os
+from django.conf import settings
 
 
 
@@ -83,35 +85,45 @@ def Department(request,Hospital_id,UID):
     params={'Pro':DepartmentList,'Hos':HospitalList,'ProId':UID,'HosId':Hospital_id,'HosId_id':a}
     return render(request,'Pages/Department.html',params)
     
-def Machine(request):
-    z=None
-    para = { 'pro': z }
-    if request.method == "POST":
-        First=request.POST.get('First')
-        Second=request.POST.get('Second')
-        Third=request.POST.get('Third') 
-        Fourth=request.POST.get('Fourth')
-        print(First,Second,Third,Fourth)
-        iris = datasets.load_iris()
-        data=pd.DataFrame({
+def Train(request):
+    iris = datasets.load_iris()
+    data=pd.DataFrame({
         'sepal length':iris.data[:,0],
         'sepal width':iris.data[:,1],
         'petal length':iris.data[:,2],
         'petal width':iris.data[:,3],
         'species':iris.target
-        })
-        X=data[['sepal length', 'sepal width', 'petal length', 'petal width']]  # Features
-        y=data['species']  # Labels
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-        clf=RandomForestClassifier(n_estimators=100)
-        clf.fit(X_train,y_train)
-        y_pred=clf.predict(X_test)
-        print("Accuracy:",metrics.accuracy_score(y_test, y_pred)*100)
-        z=clf.predict([[First,Second,Third,Fourth]])
-        params = {  'pro': z }
-        return render(request,'Pages/Machine_learning.html',params)
+    })
+    X=data[['sepal length', 'sepal width', 'petal length', 'petal width']]  # Features
+    y=data['species']  # Labels
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+    clf=RandomForestClassifier(n_estimators=100)
+    clf.fit(X_train,y_train)
+    y_pred=clf.predict(X_test)
+    print("Accuracy:",metrics.accuracy_score(y_test, y_pred)*100)
 
-    return render(request,'Pages/Machine_learning.html',para)
+    path = os.path.join(settings.MODEL_ROOT, 'clf')
+    with open(path, 'wb') as file:
+        pickle.dump(clf, file)
+
+    return render(request,'Pages/sucess.html')
 
 
+def Predict(request):
+    z=None
+    params = { 'pro': z }
+    if request.method == "POST":
+        First=request.POST.get('First')
+        Second=request.POST.get('Second')
+        Third=request.POST.get('Third') 
+        Fourth=request.POST.get('Fourth')
+
+        path = os.path.join(settings.MODEL_ROOT, 'clf')
+        with open(path, 'rb') as file:
+            model = pickle.load(file)
+
+        z=model.predict([[First,Second,Third,Fourth]])
+        params = {'pro':z}
+
+    return render(request,'Pages/Machine_learning.html',params)
 
