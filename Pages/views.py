@@ -108,7 +108,7 @@ def Machine(request):
         y_pred=clf.predict(X_test)
         print("Accuracy:",metrics.accuracy_score(y_test, y_pred)*100)
         z=clf.predict([[First,Second,Third,Fourth]])
-        params = {  'pro': z }
+        params = {  'pro': z }  
         return render(request,'Pages/Machine_learning.html',params)
 
     return render(request,'Pages/Machine_learning.html',para)
