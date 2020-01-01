@@ -106,7 +106,7 @@ def Train(request):
     path = os.path.join(settings.MODEL_ROOT, 'clf')
     with open(path, 'wb') as file:
         joblib.dump(clf, 'clf.pkl') 
-        pickle.dump(clf, file)
+        # pickle.dump(clf, file)
     
 
     return render(request,'Pages/sucess.html')
