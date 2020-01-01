@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- <script>
+$(document).ready(function(){
+  $("#test2").click(function(){
+    $("#test").html("hi d");
+  });
+});
+</script> -->
+<body>
+<form  method="POST">
+    {% csrf_token %} 
+  First:<br>
+  <input type="number" name="First" value="1">
+  <br>
+  Second:<br>
+  <input type="number" name="Second" value="2">
+  <br>
+  Third:<br>
+  <input type="number" name="Third" value="3">
+  <br>
+  Fourth:<br>
+  <input type="number" name="Fourth" value="4">
+  <br><br>
+<input id="test2" type="submit" value="submit" >
+</form>
+<p id="test" >
+    Th predicted output is {{ pro }}
+</p>
+
+</body>
+</html>

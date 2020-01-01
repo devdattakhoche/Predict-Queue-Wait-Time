@@ -2,6 +2,14 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from .models import Dept,Hospital
 from .filter import HospitalFilter
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn import metrics
+import pandas as pd
+
+
+
 
 def Documentation(request):
     return render(request,'Pages/Documentation.html')
@@ -9,7 +17,7 @@ def Documentation(request):
 def Hospitals(request):
     x = Hospital.objects.all()      
     Hospital_filter = HospitalFilter(request.GET,queryset=x)
-    HospitalFilter(request.GET).data['Hospital_name'].upper()
+    # HospitalFilter(request.GET).data['Hospital_name'].upper()
     params={'Pro':x,'filter':Hospital_filter}
     if request.method== "POST" :
         No=request.POST.get('Hospital_id')
@@ -38,7 +46,7 @@ def Single(request,Hospital_id):
     params={'Pro':DepartmentList,'HosId':Hospital_id,'HosId_id':a}
     if request.method== "POST" :
         No=request.POST.get('Dept_id') 
-        return redirect('http://localhost:8000/Hospital/'+Hospital_id+'/Dept/' + No)
+        return redirect('/Hospital/'+Hospital_id+'/Dept/' + No)
     return render(request,'Pages/Single.html',params)
 
 def Complete(request,Hospital_id):
@@ -74,3 +82,36 @@ def Department(request,Hospital_id,UID):
 
     params={'Pro':DepartmentList,'Hos':HospitalList,'ProId':UID,'HosId':Hospital_id,'HosId_id':a}
     return render(request,'Pages/Department.html',params)
+    
+def Machine(request):
+    z=None
+    para = { 'pro': z }
+    if request.method == "POST":
+        First=request.POST.get('First')
+        Second=request.POST.get('Second')
+        Third=request.POST.get('Third') 
+        Fourth=request.POST.get('Fourth')
+        print(First,Second,Third,Fourth)
+        iris = datasets.load_iris()
+        data=pd.DataFrame({
+        'sepal length':iris.data[:,0],
+        'sepal width':iris.data[:,1],
+        'petal length':iris.data[:,2],
+        'petal width':iris.data[:,3],
+        'species':iris.target
+        })
+        X=data[['sepal length', 'sepal width', 'petal length', 'petal width']]  # Features
+        y=data['species']  # Labels
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+        clf=RandomForestClassifier(n_estimators=100)
+        clf.fit(X_train,y_train)
+        y_pred=clf.predict(X_test)
+        print("Accuracy:",metrics.accuracy_score(y_test, y_pred)*100)
+        z=clf.predict([[First,Second,Third,Fourth]])
+        params = {  'pro': z }
+        return render(request,'Pages/Machine_learning.html',params)
+
+    return render(request,'Pages/Machine_learning.html',para)
+
+
+
