@@ -9,6 +9,7 @@ from sklearn import metrics
 import pandas as pd
 import pickle
 import os
+from sklearn.externals import joblib
 from django.conf import settings
 
 
@@ -104,7 +105,9 @@ def Train(request):
 
     path = os.path.join(settings.MODEL_ROOT, 'clf')
     with open(path, 'wb') as file:
+        joblib.dump(clf, 'clf.pkl') 
         pickle.dump(clf, file)
+    
 
     return render(request,'Pages/sucess.html')
 
@@ -120,7 +123,9 @@ def Predict(request):
 
         path = os.path.join(settings.MODEL_ROOT, 'clf')
         with open(path, 'rb') as file:
-            model = pickle.load(file)
+            model = joblib.load('clf.pkl')  
+            # model = pickle.load(file)
+             
 
         z=model.predict([[First,Second,Third,Fourth]])
         params = {'pro':z}
