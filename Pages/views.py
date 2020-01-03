@@ -9,7 +9,7 @@ from sklearn import metrics
 import pandas as pd
 import pickle
 import os
-from sklearn.externals import joblib
+import joblib
 from django.conf import settings
 
 
