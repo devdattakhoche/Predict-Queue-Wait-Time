@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="{% static 'single.css' %}" />
 
-{% endblock link %} 
+{% endblock link %}
 {% block Hospital %}
 Departments
 {% endblock Hospital %}
@@ -18,18 +18,19 @@ Departments
         <div class="card-body">
           <h5 class="card-title">{{ i.Type }}</h5>
           <p class="card-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel consequuntur mollitia odio similique eligendi laboriosam voluptatum quaerat corrupti exercitationem?
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel consequuntur mollitia odio similique
+            eligendi laboriosam voluptatum quaerat corrupti exercitationem?
 
           </p>
           <form action="" method="POST">
-                {% csrf_token %}
-          <input type="hidden" name="Dept_id" value="{{ i.Uid }}">
-          <button type="submit" class="btn btn-primary">Check</button>
-        </form>
+            {% csrf_token %}
+            <input type="hidden" name="Dept_id" value="{{ i.Uid }}">
+            <button type="submit" class="btn btn-primary">Check</button>
+          </form>
         </div>
       </div>
     </div>
     {% endif %}
-   {% endfor %}
+    {% endfor %}
 
-{% endblock %}
+    {% endblock %}

@@ -10,22 +10,6 @@ $(document).ready(function(){
 });
 </script> -->
 <body>
-<form  method="POST">
-    {% csrf_token %} 
-  First:<br>
-  <input type="number" name="First" >
-  <br>
-  Second:<br>
-  <input type="number" name="Second" >
-  <br>
-  Third:<br>
-  <input type="number" name="Third" >
-  <br>
-  Fourth:<br>
-  <input type="number" name="Fourth" >
-  <br><br>
-<input id="test2" type="submit" value="submit" >
-</form>
 <p id="test" >
     Th predicted output is {{ pro }}
 </p>

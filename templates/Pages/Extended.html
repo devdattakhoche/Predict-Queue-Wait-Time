@@ -81,17 +81,23 @@
     <div class="d-flex" id="wrapper">
 
       <!-- Sidebar -->
-      
+
       <div class="bg-dark border-right" id="sidebar-wrapper">
         <div class="sidebar-heading text-light"><strong>Predict Queue time</strong></div>
         <div class="list-group list-group-flush">
-          
-          <a href="http://localhost:8000/Hospital/{{ HosId_id }}/Single" class="list-group-item list-group-item-action bg-dark
-            text-secondary {% if request.path == Single %} text-light{% endif %}">Single Depts</a>
-          <a href="http://localhost:8000/Hospital/{{ HosId_id }}/Complete" class="list-group-item list-group-item-action bg-dark
-            text-secondary {% if request.path == Complete %}text-light{% endif %}">Complete Predictions</a>
-          <a href="http://localhost:8000/Hospital/{{ HosId_id }}/Unknown" class="list-group-item list-group-item-action bg-dark
-            text-secondary {% if request.path == Predictions %}  text-light{% endif %}">Our Predictions</a>
+
+          <a href="http://localhost:8000/Hospital/{{ HosId_id }}/Single"
+            class="list-group-item list-group-item-action bg-dark
+            text-secondary {% if request.path == Single %} text-light{% endif
+            %}">Single Depts</a>
+          <a href="http://localhost:8000/Hospital/{{ HosId_id }}/Complete"
+            class="list-group-item list-group-item-action bg-dark
+            text-secondary {% if request.path == Complete %}text-light{% endif
+            %}">Complete Predictions</a>
+          <a href="http://localhost:8000/Hospital/{{ HosId_id }}/Unknown"
+            class="list-group-item list-group-item-action bg-dark
+            text-secondary {% if request.path == Predictions %} text-light{%
+            endif %}">Our Predictions</a>
         </div>
       </div>
       <!-- /#sidebar-wrapper -->
@@ -113,11 +119,13 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
               <li class="nav-item">
-                <a class="nav-link {% if request.path == Documentation %}active{% endif %}"
+                <a class="nav-link {% if request.path == Documentation
+                  %}active{% endif %}"
                   href="{{ Documentation }}">Documentation</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {% if request.path == Hospitals %}active{% endif %}"
+                <a class="nav-link {% if request.path == Hospitals %}active{%
+                  endif %}"
                   href="{{ Hospitals }}">Hospitals</a>
               </li>
               <li class="nav-item dropdown">
@@ -146,16 +154,28 @@
     </div> -->
         <div class="jumbotron jumbotron-fluid">
           <div class="container">
-            <h1 class="display-5"> {% block Hospital %}  {% endblock Hospital %} </h1>
-            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dignissimos aut voluptatum vero. Blanditiis officia natus odio placeat minima vero quod, magnam laborum, deleniti corporis, excepturi porro quo sunt perspiciatis ea ipsa fugit nihil atque! Nobis dolore explicabo officiis voluptatibus dignissimos odit perferendis, quam iste veniam. Aperiam nihil tenetur voluptatibus! Minus rem deserunt quas illo ipsum explicabo, officia illum sed accusantium, deleniti eveniet non. Labore quaerat tempora officiis ab fuga itaque dolor, sint fugit? Qui, obcaecati! Error in eius numquam officia inventore, assumenda consectetur fugit unde quasi quidem quos ea voluptas incidunt explicabo non reiciendis excepturi quo alias asperiores autem!</p>
+            <h1 class="display-5"> {% block Hospital %} {% endblock Hospital %}
+            </h1>
+            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing
+              elit. Voluptatem dignissimos aut voluptatum vero. Blanditiis
+              officia natus odio placeat minima vero quod, magnam laborum,
+              deleniti corporis, excepturi porro quo sunt perspiciatis ea ipsa
+              fugit nihil atque! Nobis dolore explicabo officiis voluptatibus
+              dignissimos odit perferendis, quam iste veniam. Aperiam nihil
+              tenetur voluptatibus! Minus rem deserunt quas illo ipsum
+              explicabo, officia illum sed accusantium, deleniti eveniet non.
+              Labore quaerat tempora officiis ab fuga itaque dolor, sint fugit?
+              Qui, obcaecati! Error in eius numquam officia inventore, assumenda
+              consectetur fugit unde quasi quidem quos ea voluptas incidunt
+              explicabo non reiciendis excepturi quo alias asperiores autem!</p>
           </div>
         </div>
         {% block body %}
-  
-{% endblock body %}
-          <!-- /#page-content-wrapper -->
 
-        
+        {% endblock body %}
+        <!-- /#page-content-wrapper -->
+
+
       </div>
     </div>
 
@@ -180,7 +200,6 @@
       $("#wrapper").toggleClass("toggled");
     });
   </script>
-  
   </body>
 
 </html>

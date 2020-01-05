@@ -1,43 +1,46 @@
-{% extends 'Pages/Base.html' %}
- {% load static %} 
- {% load widget_tweaks %}
- {% block link %}
+ {% extends 'Pages/Base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block link %}
 <link rel="stylesheet" href="{% static 'single.css' %}" />
 {% endblock link %} {% block body %}
 <div class="container-fluid">
   <div class="headline headline-md"><h2>Search</h2></div>
 
-    <form method="get" action="">
-      {{ filter.form.Hospital_name.label_tag }}
-        <div class="row">
-          <div class="form-group col-sm-1 col-md-10">  
-            {% render_field filter.form.Hospital_name class="form-control" %}
-          </div>
-        <div class="form-group col-sm-2 col-md-2">
-          <input value="Search" type="Submit" class="btn btn-primary form-control" >
-        </div>
+  <form method="get" action="">
+    {{ filter.form.Hospital_name.label_tag }}
+    <div class="row">
+      <div class="form-group col-sm-1 col-md-10">
+        {% render_field filter.form.Hospital_name class="form-control" %}
       </div>
-    </form>
+      <div class="form-group col-sm-2 col-md-2">
+        <input value="Search" type="Submit" class="btn btn-primary form-control">
+      </div>
+    </div>
+  </form>
 
 
   <div class="row row-cols-1 row-cols-md-5">
     {% for i in filter.qs %}
     <div class="col mb-4">
       <div class="card h-100">
-        <img src="/media/{{ i.image }}" class="card-img-top" alt="Image not available" />
+        <img src="/media/{{ i.image }}" class="card-img-top" alt="Image not
+          available" />
         <div class="card-body">
           <h5 class="card-title">{{ i.Hospital_name }}</h5>
           <p class="card-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel consequuntur mollitia odio similique eligendi laboriosam voluptatum quaerat corrupti exercitationem?
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel
+            consequuntur mollitia odio similique eligendi laboriosam voluptatum
+            quaerat corrupti exercitationem?
 
           </p>
           <form action="" method="POST">
-                {% csrf_token %}
-          <input type="hidden" name="Hospital_id" value="{{ i.Hospital_id }}">
-          <button type="submit" class="btn btn-primary">Check</button>
-        </form>
+            {% csrf_token %}
+            <input type="hidden" name="Hospital_id" value="{{ i.Hospital_id }}">
+            <button type="submit" class="btn btn-primary">Check</button>
+          </form>
         </div>
       </div>
     </div>
     {% endfor %}
-{% endblock %}
+    {% endblock %}
