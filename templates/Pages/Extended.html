@@ -88,16 +88,13 @@
 
           <a href="http://localhost:8000/Hospital/{{ HosId_id }}/Single"
             class="list-group-item list-group-item-action bg-dark
-            text-secondary {% if request.path == Single %} text-light{% endif
-            %}">Single Depts</a>
+            text-secondary {% if request.path == Single %} text-light {% endif %}">Single Depts</a>
           <a href="http://localhost:8000/Hospital/{{ HosId_id }}/Complete"
             class="list-group-item list-group-item-action bg-dark
-            text-secondary {% if request.path == Complete %}text-light{% endif
-            %}">Complete Predictions</a>
+            text-secondary {% if request.path == Complete %}text-light {% endif %}">Complete Predictions</a>
           <a href="http://localhost:8000/Hospital/{{ HosId_id }}/Unknown"
             class="list-group-item list-group-item-action bg-dark
-            text-secondary {% if request.path == Predictions %} text-light{%
-            endif %}">Our Predictions</a>
+            text-secondary {% if request.path == Predictions %} text-light {% endif %}">Our Predictions</a>
         </div>
       </div>
       <!-- /#sidebar-wrapper -->
@@ -119,13 +116,11 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
               <li class="nav-item">
-                <a class="nav-link {% if request.path == Documentation
-                  %}active{% endif %}"
+                <a class="nav-link {% if request.path == Documentation %}active{% endif %}"
                   href="{{ Documentation }}">Documentation</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {% if request.path == Hospitals %}active{%
-                  endif %}"
+                <a class="nav-link {% if request.path == Hospitals %}active{% endif %}"
                   href="{{ Hospitals }}">Hospitals</a>
               </li>
               <li class="nav-item dropdown">
