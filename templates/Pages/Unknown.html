@@ -6,29 +6,32 @@
 {% block body %}
 
 <div class="container-fluid">
-  <div class="row row-cols-1 row-cols-md-5">
-    {% for i in Pro %}
-    {% if i.Hospital_id == HosId %}
-    <div class="col mb-4">
-      <div class="card h-100">
-        <img src="/media/{{ i.Image }}" class="card-img-top" alt="Image not available" />
-        <div class="card-body">
-          <h5 class="card-title">{{ i.Type }}</h5>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel consequuntur mollitia odio similique
-            eligendi laboriosam voluptatum quaerat corrupti exercitationem?
+    <div class="row row-cols-1 row-cols-md-5">
+        {% for i in Pro %}
+        {% if i.Hospital_id == HosId %}
+        <div class="col mb-4">
+            <div class="card h-100">
+                <img src="/media/{{ i.Image }}" class="card-img-top" alt="Image
+                    not available" />
+                <div class="card-body">
+                    <h5 class="card-title">{{ i.Type }}</h5>
+                    <p class="card-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Unde vel consequuntur mollitia odio similique
+                        eligendi laboriosam voluptatum quaerat corrupti
+                        exercitationem?
 
-          </p>
-          
-          <form action="" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="Dept_id" value="{{ i.Uid }}">
-            <button type="submit" class="btn btn-primary">Check</button>
-          </form>
+                    </p>
+
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="Dept_id" value="{{ i.Uid }}">
+                        <button type="submit" class="btn btn-primary">Check</button>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    {% endif %}
-    {% endfor %}
+        {% endif %}
+        {% endfor %}
 
-    {% endblock body %}
+        {% endblock body %}
