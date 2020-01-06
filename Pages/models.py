@@ -5,6 +5,7 @@ from django.db import models
 class Hospital(models.Model):
     Hospital_id = models.IntegerField(primary_key=True,unique=True,null=False,blank=False)
     Hospital_name = models.CharField(max_length=100,default='')
+    Image = models.ImageField(upload_to="Hospital_images/",default="")
 
     def __str__(self):
         x=str(self.Hospital_id)

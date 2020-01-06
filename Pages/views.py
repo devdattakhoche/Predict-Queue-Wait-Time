@@ -71,8 +71,20 @@ def Complete(request, Hospital_id):
 
 def Unknown(request, Hospital_id):
     print("Printed in Views.Unknown")
-    x = Hospital.objects.get(Hospital_id=Hospital_id)
-    params = {'HosId_id': x}
+    a = Hospital.objects.get(Hospital_id=Hospital_id)
+    x = Dept.objects.all()
+
+    DepartmentList = []
+
+    for i in x:
+        DepartmentDict = {}
+        DepartmentDict['Uid'] = str(i.Uid)
+        DepartmentDict['Type'] = str(i.Type)
+        DepartmentDict['Image'] = i.image
+        DepartmentDict['Hospital_id'] = str(i.Hospital_id)
+        DepartmentList.append(DepartmentDict)
+
+    params = {'Pro': DepartmentList, 'HosId': Hospital_id, 'HosId_id': a}
     return render(request, 'Pages/Unknown.html', params)
 
 
