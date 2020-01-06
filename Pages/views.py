@@ -204,13 +204,7 @@ def Predict(request):
         prediction_list = [Queue_number, shift, Hour,
                            waiting_queue, arrival_rate, service_rate, dayNumber]
         prediction_parameter = ([prediction_list])
-        z = model.predict(prediction_parameter)
-        print(z, type(z))
-        z = str(z)
-        z = z[1:-1]
-        print(z, type(z))
-        z = float(z)
-        print("{0:.2f}".format(round(z, 2)))
+        z = model.predict(prediction_parameter)[0]
         z = "{0:.2f}".format(round(z, 2))
 
         params = {'pro': z}
@@ -249,11 +243,8 @@ def OurPredictions(request, Hospital_id, UID):
         prediction_list = [UID, shift, Hour,
                            waiting_queue, arrival_rate, service_rate, dayNumber]
         prediction_parameter = ([prediction_list])
-        z = model.predict(prediction_parameter)
-        z = str(z)
-        z = z[1:-1]
-        z = float(z)
+        z = model.predict(prediction_parameter)[0]
         z = "{0:.2f}".format(round(z, 2))
         zlist.append(z)
-    params = {'Pro': UID, 'Day': days[dayNumber], 'list': zlist}
+    params = {'Pro': UID, 'Day': days[dayNumber], 'list': zlist,'HosId_id': Hospital_id}
     return render(request, 'Pages/OurPredictions.html', params)
