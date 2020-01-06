@@ -12,6 +12,7 @@ import pandas as pd
 import pickle
 import calendar
 import os
+from datetime import date
 import joblib
 from django.conf import settings
 
@@ -83,6 +84,9 @@ def Unknown(request, Hospital_id):
         DepartmentDict['Image'] = i.image
         DepartmentDict['Hospital_id'] = str(i.Hospital_id)
         DepartmentList.append(DepartmentDict)
+    if request.method == "POST":
+        No = request.POST.get('Dept_id')
+        return redirect('/Hospital/'+ Hospital_id +'/OurPredictions/' + No)
 
     params = {'Pro': DepartmentList, 'HosId': Hospital_id, 'HosId_id': a}
     return render(request, 'Pages/Unknown.html', params)
@@ -212,3 +216,46 @@ def Predict(request):
         params = {'pro': z}
 
     return render(request, 'Pages/Machine_learning.html', params)
+
+def OurPredictions(request, Hospital_id, UID):
+        print("Printed in Views.OurPredictions")
+        Date = str(date.today())
+        year, month, day = (int(i) for i in Date.split('-'))
+        dayNumber = calendar.weekday(year, month, day)
+        days = ["Monday", "Tuesday", "Wednesday",
+                 "Thursday", "Friday", "Saturday", "Sunday"]
+        print(dayNumber, days[dayNumber])
+        zlist = []
+        path = os.path.join(settings.MODEL_ROOT, 'rf')
+        with open(path, 'rb') as file:
+            model = joblib.load('rf.pkl')
+            data = joblib.load('data.pkl')
+        
+        for Hour in range(8,18):
+            shift = None
+            if Hour in [8, 9, 10, 11, 12]:
+                shift = 1
+            elif Hour in [13, 14, 15, 16, 17, 18]:
+                shift = 2
+            else:
+                shift = 3
+            arrival_rate = data[(data['Created_queue_hours'] == Hour) & (
+                data['weekdays'] == dayNumber)]['Arrival_rate'].max()
+            service_rate = data[(data['Created_queue_hours'] == Hour) & (
+                data['weekdays'] == dayNumber)]['Service_rate'].min()
+            waiting_queue = data[(data['Created_queue_hours'] == Hour) & (
+                data['weekdays'] == dayNumber)]['Number_of_wating_queue'].max()
+            prediction_list = [UID, shift, Hour,
+                            waiting_queue, arrival_rate, service_rate, dayNumber]
+            prediction_parameter = ([prediction_list])
+            z = model.predict(prediction_parameter)
+            z = str(z)
+            z = z[1:-1]
+            z = float(z)
+            z = "{0:.2f}".format(round(z, 2))
+            zlist.append(z)
+        params = {'Pro': UID,'Day': days[dayNumber],'list': zlist}
+        for i in params['list']:
+            print(i)
+        return render(request, 'Pages/OurPredictions.html',params)
+
