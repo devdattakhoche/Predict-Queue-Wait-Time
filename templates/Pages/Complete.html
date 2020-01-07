@@ -3,3 +3,34 @@
 {% block Hospital %}
 Complete Process
 {% endblock %}
+{% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        
+      $("#Add").click(function(){
+        i = Count();
+        $('#mydiv').append('<div><select name="dept'+ i +'"><option value="volvo">Volvo</option><option value="saab">Saab</option><option value="fiat">Fiat</option><option value="audi">Audi</option></select><br><br></div>')
+      });
+    });
+    let count = 1;
+        function Count() {
+            count++;
+            return count;
+        }
+    </script>
+<form action="" id = "myform" >
+    <select name="dept1">
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="fiat">Fiat</option>
+      <option value="audi">Audi</option>
+    </select>
+    <br><br>
+    <div  id="mydiv" >
+    </div>
+    <input type="submit">
+  </form>
+  <br>
+  <button  id="Add" >Click on this paragraph.</button>
+{% endblock body %}
