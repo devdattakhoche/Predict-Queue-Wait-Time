@@ -10,7 +10,8 @@ Complete Process
         
       $("#Add").click(function(){
         i = Count();
-        $('#mydiv').append('<div><select name="dept'+ i +'"><option value="volvo">Volvo</option><option value="saab">Saab</option><option value="fiat">Fiat</option><option value="audi">Audi</option></select><br><br></div>')
+        $('#hidden').val(i)
+        $('#mydiv').append('<div><select name="'+ i +'"><option name="volvo" value="101">Volvo</option><option name="saab" value="201">Saab</option><option name="fiat" value="301">Fiat</option><option name="audi" value="401">Audi</option></select><br><br></div>')
       });
     });
     let count = 1;
@@ -19,14 +20,18 @@ Complete Process
             return count;
         }
     </script>
-<form action="" id = "myform" >
-    <select name="dept1">
-      <option value="volvo">Volvo</option>
-      <option value="saab">Saab</option>
-      <option value="fiat">Fiat</option>
-      <option value="audi">Audi</option>
+<form action="http://localhost:8000/Hospital/{{ HosId_id }}/CompleteProcess1" id = "myform" method='POST'>
+  {% csrf_token %}
+  <input type="date" name='Date'>
+  <input type ="time" name='time'>
+    <select name="1">
+      <option name = 'volvo' value="101">Volvo</option>
+      <option name='saab' value = "201">Saab</option>
+      <option name='fiat' value="301">Fiat</option>
+      <option name='audi' value = "401">Audi</option>
     </select>
     <br><br>
+    <input type="hidden" value='1' id="hidden" name="count">
     <div  id="mydiv" >
     </div>
     <input type="submit">

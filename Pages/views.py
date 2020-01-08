@@ -15,11 +15,74 @@ import os
 from datetime import date
 import joblib
 from django.conf import settings
-
+import math
 
 def Documentation(request):
     print("Printed in ViewsDocumentation")
     return render(request, 'Pages/Documentation.html')
+
+def CompleteProcess(request,Hospital_id):
+
+    x = Hospital.objects.get(Hospital_id=Hospital_id)
+    params = {'HosId_id': x}
+
+    if request.method == "POST":
+
+        manual_prediction = []
+
+        date = request.POST.get("Date")
+        year, month, day = (int(i) for i in date.split('-'))
+        weekday = calendar.weekday(year, month, day)
+
+        time = request.POST.get('time')
+        Hour, Mins = (int(i) for i in time.split(':'))
+        if Mins > 30:
+            Hour = Hour + 1
+        created_queue_hour = int(Hour)
+
+        count = int(request.POST.get('count'))
+
+        for i in range(1,count+1):
+            department = request.POST.get(str(i))
+            manual_prediction.append(department)
+
+        path = os.path.join(settings.MODEL_ROOT, 'rf')
+        with open(path, 'rb') as file:
+            model = joblib.load('rf.pkl')
+            data = joblib.load('data.pkl')
+
+        value = np.array([0])
+        counter = 0
+        for i in manual_prediction:
+            
+           
+            queue_number = int(i)
+            created_queue_hour = created_queue_hour+ value[0]
+            print(created_queue_hour)
+
+            if created_queue_hour >= 18:
+                break
+
+            counter+= 1
+            
+            if math.ceil(created_queue_hour) in [8,9,10,11,12]:
+                shift = 1
+            elif math.ceil(created_queue_hour) in [13,14,15,16,17,18]:
+                shift = 2
+            else:
+                shift = 3
+
+            arrival_rate = data[(data['Created_queue_hours'] == math.ceil(created_queue_hour)) & (data['weekdays'] == weekday) & (data['Queue_number'] == queue_number) ]['Arrival_rate'].max()
+            service_rate = data[(data['Created_queue_hours'] == math.ceil(created_queue_hour)) & (data['weekdays'] == weekday) & (data['Queue_number'] == queue_number)]['Service_rate'].min()
+            waiting_queue = data[(data['Created_queue_hours'] == math.ceil(created_queue_hour)) & (data['weekdays'] == weekday) & (data['Queue_number'] == queue_number)]['Number_of_wating_queue'].max()
+
+            prediction_list = [queue_number,shift,created_queue_hour,waiting_queue,arrival_rate,service_rate,weekday]
+            prediction_parameter =np.array([prediction_list])
+            value = value + model.predict(prediction_parameter)
+        value = "{0:.2f}".format(round(value[0], 2))
+        params = {'HosId_id': x,'value':int(value[0]),'department':manual_prediction,'count':count,'counter':counter,'diff':count-counter}
+       
+    return render(request, 'Pages/CompleteProcess1.html',params)
 
 
 def Hospitals(request):
@@ -64,9 +127,13 @@ def Single(request, Hospital_id):
 
 
 def Complete(request, Hospital_id):
-    print("Printed in Views.Complete")
+
     x = Hospital.objects.get(Hospital_id=Hospital_id)
     params = {'HosId_id': x}
+
+    print("Printed in Views.Complete")
+    
+    
     return render(request, 'Pages/Complete.html', params)
 
 

@@ -1,0 +1,12 @@
+{% extends 'pages/Extended.html' %}
+
+{% block body %}
+
+{% if counter == count %}
+<h1>Your predicted value is {{ value }} hours for first {{ counter }} department</h1>
+{% else %}
+<h1>Your prediction value for {{ counter }} department is {{ value }} hours </h1>
+<h1>Your turn wont come for {{ diff }} departments </h1>
+{% endif %}
+    
+{% endblock body %}
