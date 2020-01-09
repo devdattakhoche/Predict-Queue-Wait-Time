@@ -11,7 +11,7 @@ urlpatterns = [
     path("Hospital/<Hospital_id>/Dept/<UID>", views.Department, name="Department"),
     path("Hospital/<Hospital_id>/OurPredictions/<UID>", views.OurPredictions, name="OurPredictions"),
     path("Predict", views.Predict, name="Predict"),
-    path("Train", views.Train, name="Train"),
+    # path("Train", views.Train, name="Train"),
     path("Hospital/<Hospital_id>/CompleteProcess1", views.CompleteProcess, name="CompleteProcess1"),
 
 ]

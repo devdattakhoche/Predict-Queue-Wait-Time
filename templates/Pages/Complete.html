@@ -20,7 +20,7 @@ Complete Process
             return count;
         }
     </script>
-<form action="http://localhost:8000/Hospital/{{ HosId_id }}/CompleteProcess1" id = "myform" method='POST'>
+<form action="/Hospital/{{ HosId_id }}/CompleteProcess1" id = "myform" method='POST'>
   {% csrf_token %}
   <input type="date" name='Date'>
   <input type ="time" name='time'>

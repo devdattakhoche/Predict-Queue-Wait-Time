@@ -16,13 +16,57 @@ from datetime import date
 import joblib
 from django.conf import settings
 import math
-
+print("I have printed globally")
+model = joblib.load('rf.pkl')
+data = joblib.load('data.pkl')
+once = 0
+print("once = ",once)
 def Documentation(request):
     print("Printed in ViewsDocumentation")
+    global once 
+    print(once)
+    if once == 0 :
+        column_name = ['Queue_number', 'Shift', 'date', 'Created_queue_hours',
+                   'Waiting_duration', 'Number_of_wating_queue', 'Arrival_rate', 'Service_rate']
+        data = pd.read_csv('http://bit.ly/deepblue_data',
+                       header=0, names=column_name)
+        dt = data['date'].str.split('/')
+        dt2 = []
+        for i in dt:
+            i[0], i[1] = i[1], i[0]
+            string = '/'
+            i = string.join(i)
+            dt2.append(i)
+        data['date'] = pd.Series(dt2)
+        data['date'] = pd.to_datetime(data['date'])
+        data['weekdays'] = data['date'].dt.weekday
+        data.drop('date', axis=1, inplace=True)
+        y = data['Waiting_duration']
+        X = data.drop('Waiting_duration', axis=1)
+        # y = np.array(y)
+        # X = np.array(X)
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.30, random_state=42)
+        rf = RandomForestRegressor(n_estimators=1000, random_state=42)
+        rf.fit(X_train, y_train)
+        prediction = rf.predict(X_test)
+        error = abs(prediction - y_test)
+        mape = 100*(error/y_test)
+        accuracy = 100 - np.mean(mape)
+        print('Accuracy:', round(accuracy, 2), '%.')
+        path = os.path.join(settings.MODEL_ROOT, 'rf')
+        with open(path, 'wb') as file:
+            joblib.dump(rf, 'rf.pkl')
+            joblib.dump(data, 'data.pkl')
+        prediction_parameter = ([[101,   2,  14,  40,   4,   2,   6]])
+        rf.predict(prediction_parameter)
+        once = 1
+    print(once)
     return render(request, 'Pages/Documentation.html')
 
-def CompleteProcess(request,Hospital_id):
 
+def CompleteProcess(request, Hospital_id):
+    print("Printed in CompleteProcess")
     x = Hospital.objects.get(Hospital_id=Hospital_id)
     params = {'HosId_id': x}
 
@@ -42,47 +86,52 @@ def CompleteProcess(request,Hospital_id):
 
         count = int(request.POST.get('count'))
 
-        for i in range(1,count+1):
+        for i in range(1, count+1):
             department = request.POST.get(str(i))
             manual_prediction.append(department)
 
-        path = os.path.join(settings.MODEL_ROOT, 'rf')
-        with open(path, 'rb') as file:
-            model = joblib.load('rf.pkl')
-            data = joblib.load('data.pkl')
+        # path = os.path.join(settings.MODEL_ROOT, 'rf')
+        # with open(path, 'rb') as file:
+        #     model = joblib.load('rf.pkl')
+        #     data = joblib.load('data.pkl')
 
         value = np.array([0])
         counter = 0
         for i in manual_prediction:
-            
-           
+
             queue_number = int(i)
-            created_queue_hour = created_queue_hour+ value[0]
+            created_queue_hour = created_queue_hour + value[0]
             print(created_queue_hour)
 
             if created_queue_hour >= 18:
                 break
 
-            counter+= 1
-            
-            if math.ceil(created_queue_hour) in [8,9,10,11,12]:
+            counter += 1
+
+            if math.ceil(created_queue_hour) in [8, 9, 10, 11, 12]:
                 shift = 1
-            elif math.ceil(created_queue_hour) in [13,14,15,16,17,18]:
+            elif math.ceil(created_queue_hour) in [13, 14, 15, 16, 17, 18]:
                 shift = 2
             else:
                 shift = 3
 
-            arrival_rate = data[(data['Created_queue_hours'] == math.ceil(created_queue_hour)) & (data['weekdays'] == weekday) & (data['Queue_number'] == queue_number) ]['Arrival_rate'].max()
-            service_rate = data[(data['Created_queue_hours'] == math.ceil(created_queue_hour)) & (data['weekdays'] == weekday) & (data['Queue_number'] == queue_number)]['Service_rate'].min()
-            waiting_queue = data[(data['Created_queue_hours'] == math.ceil(created_queue_hour)) & (data['weekdays'] == weekday) & (data['Queue_number'] == queue_number)]['Number_of_wating_queue'].max()
+            arrival_rate = data[(data['Created_queue_hours'] == math.ceil(created_queue_hour)) & (
+                data['weekdays'] == weekday) & (data['Queue_number'] == queue_number)]['Arrival_rate'].max()
+            service_rate = data[(data['Created_queue_hours'] == math.ceil(created_queue_hour)) & (
+                data['weekdays'] == weekday) & (data['Queue_number'] == queue_number)]['Service_rate'].min()
+            waiting_queue = data[(data['Created_queue_hours'] == math.ceil(created_queue_hour)) & (
+                data['weekdays'] == weekday) & (data['Queue_number'] == queue_number)]['Number_of_wating_queue'].max()
 
-            prediction_list = [queue_number,shift,created_queue_hour,waiting_queue,arrival_rate,service_rate,weekday]
-            prediction_parameter =np.array([prediction_list])
+            prediction_list = [queue_number, shift, created_queue_hour,
+                               waiting_queue, arrival_rate, service_rate, weekday]
+            prediction_parameter = np.array([prediction_list])
             value = value + model.predict(prediction_parameter)
         value = "{0:.2f}".format(round(value[0], 2))
-        params = {'HosId_id': x,'value':int(value[0]),'department':manual_prediction,'count':count,'counter':counter,'diff':count-counter}
-       
-    return render(request, 'Pages/CompleteProcess1.html',params)
+        params = {'HosId_id': x, 'value': float(
+            value), 'department': manual_prediction, 'count': count, 'counter': counter, 'diff': count-counter}
+        print(value)
+
+    return render(request, 'Pages/CompleteProcess1.html', params)
 
 
 def Hospitals(request):
@@ -132,8 +181,7 @@ def Complete(request, Hospital_id):
     params = {'HosId_id': x}
 
     print("Printed in Views.Complete")
-    
-    
+
     return render(request, 'Pages/Complete.html', params)
 
 
@@ -186,44 +234,44 @@ def Department(request, Hospital_id, UID):
     return render(request, 'Pages/Department.html', params)
 
 
-def Train(request):
-    print("Printed in Views.Train")
-    column_name = ['Queue_number', 'Shift', 'date', 'Created_queue_hours',
-                   'Waiting_duration', 'Number_of_wating_queue', 'Arrival_rate', 'Service_rate']
-    data = pd.read_csv('http://bit.ly/deepblue_data',
-                       header=0, names=column_name)
-    dt = data['date'].str.split('/')
-    dt2 = []
-    for i in dt:
-        i[0], i[1] = i[1], i[0]
-        string = '/'
-        i = string.join(i)
-        dt2.append(i)
-    data['date'] = pd.Series(dt2)
-    data['date'] = pd.to_datetime(data['date'])
-    data['weekdays'] = data['date'].dt.weekday
-    data.drop('date', axis=1, inplace=True)
-    y = data['Waiting_duration']
-    X = data.drop('Waiting_duration', axis=1)
-    # y = np.array(y)
-    # X = np.array(X)
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.30, random_state=42)
-    rf = RandomForestRegressor(n_estimators=1000, random_state=42)
-    rf.fit(X_train, y_train)
-    prediction = rf.predict(X_test)
-    error = abs(prediction - y_test)
-    mape = 100*(error/y_test)
-    accuracy = 100 - np.mean(mape)
-    print('Accuracy:', round(accuracy, 2), '%.')
-    path = os.path.join(settings.MODEL_ROOT, 'rf')
-    with open(path, 'wb') as file:
-        joblib.dump(rf, 'rf.pkl')
-        joblib.dump(data, 'data.pkl')
-    prediction_parameter = ([[101,   2,  14,  40,   4,   2,   6]])
-    rf.predict(prediction_parameter)
+# def Train(request):
+#     print("Printed in Views.Train")
+#     column_name = ['Queue_number', 'Shift', 'date', 'Created_queue_hours',
+#                    'Waiting_duration', 'Number_of_wating_queue', 'Arrival_rate', 'Service_rate']
+#     data = pd.read_csv('http://bit.ly/deepblue_data',
+#                        header=0, names=column_name)
+#     dt = data['date'].str.split('/')
+#     dt2 = []
+#     for i in dt:
+#         i[0], i[1] = i[1], i[0]
+#         string = '/'
+#         i = string.join(i)
+#         dt2.append(i)
+#     data['date'] = pd.Series(dt2)
+#     data['date'] = pd.to_datetime(data['date'])
+#     data['weekdays'] = data['date'].dt.weekday
+#     data.drop('date', axis=1, inplace=True)
+#     y = data['Waiting_duration']
+#     X = data.drop('Waiting_duration', axis=1)
+#     # y = np.array(y)
+#     # X = np.array(X)
+#     X_train, X_test, y_train, y_test = train_test_split(
+#         X, y, test_size=0.30, random_state=42)
+#     rf = RandomForestRegressor(n_estimators=1000, random_state=42)
+#     rf.fit(X_train, y_train)
+#     prediction = rf.predict(X_test)
+#     error = abs(prediction - y_test)
+#     mape = 100*(error/y_test)
+#     accuracy = 100 - np.mean(mape)
+#     print('Accuracy:', round(accuracy, 2), '%.')
+#     path = os.path.join(settings.MODEL_ROOT, 'rf')
+#     with open(path, 'wb') as file:
+#         joblib.dump(rf, 'rf.pkl')
+#         joblib.dump(data, 'data.pkl')
+#     prediction_parameter = ([[101,   2,  14,  40,   4,   2,   6]])
+#     rf.predict(prediction_parameter)
 
-    return render(request, 'Pages/sucess.html')
+#     return render(request, 'Pages/sucess.html')
 
 
 def Predict(request):
@@ -248,10 +296,10 @@ def Predict(request):
         print(Hour)
         print(Queue_number, type(Queue_number),
               Date, type(Date), Time, type(Time))
-        path = os.path.join(settings.MODEL_ROOT, 'rf')
-        with open(path, 'rb') as file:
-            model = joblib.load('rf.pkl')
-            data = joblib.load('data.pkl')
+        # path = os.path.join(settings.MODEL_ROOT, 'rf')
+        # with open(path, 'rb') as file:
+        # model = joblib.load('rf.pkl')
+        # data = joblib.load('data.pkl')
         print(type(data))
         print(data.head())
         shift = None
@@ -288,10 +336,10 @@ def OurPredictions(request, Hospital_id, UID):
             "Thursday", "Friday", "Saturday", "Sunday"]
     print(dayNumber, days[dayNumber])
     zlist = []
-    path = os.path.join(settings.MODEL_ROOT, 'rf')
-    with open(path, 'rb') as file:
-        model = joblib.load('rf.pkl')
-        data = joblib.load('data.pkl')
+    # path = os.path.join(settings.MODEL_ROOT, 'rf')
+    # with open(path, 'rb') as file:
+    #     model = joblib.load('rf.pkl')
+    #     data = joblib.load('data.pkl')
 
     for Hour in range(8, 18):
         shift = None
@@ -313,5 +361,6 @@ def OurPredictions(request, Hospital_id, UID):
         z = model.predict(prediction_parameter)[0]
         z = "{0:.2f}".format(round(z, 2))
         zlist.append(z)
-    params = {'Pro': UID, 'Day': days[dayNumber], 'list': zlist,'HosId_id': Hospital_id}
+    params = {'Pro': UID, 'Day': days[dayNumber],
+              'list': zlist, 'HosId_id': Hospital_id}
     return render(request, 'Pages/OurPredictions.html', params)
