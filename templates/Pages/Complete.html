@@ -24,12 +24,13 @@ Complete Process
   {% csrf_token %}
   <input type="date" name='Date'>
   <input type ="time" name='time'>
-    <select name="1">
-      <option name = 'volvo' value="101">Volvo</option>
-      <option name='saab' value = "201">Saab</option>
-      <option name='fiat' value="301">Fiat</option>
-      <option name='audi' value = "401">Audi</option>
+    <select name="1" class="custom-select mb-3" >
+      <option  value="101">Volvo</option>
+      <option  value = "201">Saab</option>
+      <option  value="301">Fiat</option>
+      <option value = "401">Audi</option>
     </select>
+    
     <br><br>
     <input type="hidden" value='1' id="hidden" name="count">
     <div  id="mydiv" >

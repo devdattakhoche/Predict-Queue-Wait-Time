@@ -17,8 +17,8 @@ import joblib
 from django.conf import settings
 import math
 print("I have printed globally")
-model = joblib.load('rf.pkl')
-data = joblib.load('data.pkl')
+# model = joblib.load('rf.pkl')
+# data = joblib.load('data.pkl')
 once = 0
 print("once = ",once)
 def Documentation(request):
@@ -89,11 +89,12 @@ def CompleteProcess(request, Hospital_id):
         for i in range(1, count+1):
             department = request.POST.get(str(i))
             manual_prediction.append(department)
+        print(manual_prediction,department)
 
-        # path = os.path.join(settings.MODEL_ROOT, 'rf')
-        # with open(path, 'rb') as file:
-        #     model = joblib.load('rf.pkl')
-        #     data = joblib.load('data.pkl')
+        path = os.path.join(settings.MODEL_ROOT, 'rf')
+        with open(path, 'rb') as file:
+            model = joblib.load('rf.pkl')
+            data = joblib.load('data.pkl')
 
         value = np.array([0])
         counter = 0
@@ -296,10 +297,10 @@ def Predict(request):
         print(Hour)
         print(Queue_number, type(Queue_number),
               Date, type(Date), Time, type(Time))
-        # path = os.path.join(settings.MODEL_ROOT, 'rf')
-        # with open(path, 'rb') as file:
-        # model = joblib.load('rf.pkl')
-        # data = joblib.load('data.pkl')
+        path = os.path.join(settings.MODEL_ROOT, 'rf')
+        with open(path, 'rb') as file:
+        model = joblib.load('rf.pkl')
+        data = joblib.load('data.pkl')
         print(type(data))
         print(data.head())
         shift = None
@@ -336,10 +337,10 @@ def OurPredictions(request, Hospital_id, UID):
             "Thursday", "Friday", "Saturday", "Sunday"]
     print(dayNumber, days[dayNumber])
     zlist = []
-    # path = os.path.join(settings.MODEL_ROOT, 'rf')
-    # with open(path, 'rb') as file:
-    #     model = joblib.load('rf.pkl')
-    #     data = joblib.load('data.pkl')
+    path = os.path.join(settings.MODEL_ROOT, 'rf')
+    with open(path, 'rb') as file:
+        model = joblib.load('rf.pkl')
+        data = joblib.load('data.pkl')
 
     for Hour in range(8, 18):
         shift = None
