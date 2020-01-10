@@ -19,13 +19,13 @@ import math
 print("I have printed globally")
 # model = joblib.load('rf.pkl')
 # data = joblib.load('data.pkl')
-once = 0
-print("once = ",once)
+flag = 0
+print("flag = ",flag)
 def Documentation(request):
     print("Printed in ViewsDocumentation")
-    global once 
-    print(once)
-    if once == 0 :
+    global flag 
+    print(flag)
+    if flag == 0 :
         column_name = ['Queue_number', 'Shift', 'date', 'Created_queue_hours',
                    'Waiting_duration', 'Number_of_wating_queue', 'Arrival_rate', 'Service_rate']
         data = pd.read_csv('http://bit.ly/deepblue_data',
@@ -60,8 +60,8 @@ def Documentation(request):
             joblib.dump(data, 'data.pkl')
         prediction_parameter = ([[101,   2,  14,  40,   4,   2,   6]])
         rf.predict(prediction_parameter)
-        once = 1
-    print(once)
+        flag = 1
+    print(flag)
     return render(request, 'Pages/Documentation.html')
 
 
