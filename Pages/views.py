@@ -299,8 +299,8 @@ def Predict(request):
               Date, type(Date), Time, type(Time))
         path = os.path.join(settings.MODEL_ROOT, 'rf')
         with open(path, 'rb') as file:
-        model = joblib.load('rf.pkl')
-        data = joblib.load('data.pkl')
+            model = joblib.load('rf.pkl')
+            data = joblib.load('data.pkl')
         print(type(data))
         print(data.head())
         shift = None
