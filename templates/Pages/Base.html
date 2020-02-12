@@ -49,13 +49,15 @@
                     </li>
                   </ul> -->
   </nav>
-  <div class="jumbotron jumbotron-fluid " style="margin-top:50px;background-color: #44B78B;">
+  <div class="jumbotron jumbotron-fluid " style="margin-top:50px;background-color: #44B78B;
+  background-image: url('{% static 'queue.jpg' %}');">
     <div class="container" style="height: 100px; padding-top: 0px;">
       {% if request.path == Documentation %}
       <h1 class="display-5" style="padding-top: 0px; color: #e8ecf1;">Documentation</h1>
       <p class="lead" style="color: white;">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam dolor temporibus at quaerat ut
         illum quo officiis veritatis provident! Eius iusto, voluptas illum blanditiis nisi quidem aliquam? Eius,
         provident? Numquam! </p>
+        <!-- <img src="{% static 'opd.jpg' %}" alt="img here"> -->
     </div>
   </div>
 
@@ -90,6 +92,7 @@
   {% endblock body %}
   {% block footer %}
   <div class="card fixed-bottom w-100 col-md-12" style="background-color:#0C4B33; position: fixed; ">
+    
     <p style="color: aliceblue; margin-left: auto;margin-right: auto;">Copyright 2019</p>
   </div>
   {% endblock footer %}
