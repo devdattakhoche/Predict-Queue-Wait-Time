@@ -8,8 +8,8 @@ from Pages.models import Hospital,Dept
 from django.core.files.storage import FileSystemStorage
 
 def index(request):
-    Hospital_id = Hospital.objects.get(Hospital_name=request.user.username)
     if request.method=='POST':
+        Hospital_id = Hospital.objects.get(Hospital_name=request.user.username)
         for i in range(1,int(request.POST['srajan1'])):
             Department_name = request.POST['Department[{}][name]'.format(i)]
             Dept_instance = Dept.objects.create(Type=Department_name,Hospital_id=Hospital_id)
@@ -44,7 +44,7 @@ def registration(request):
         user = User.objects.create_user(username=name,password=password)
         print(name,password,image)
         hospital_instance = Hospital.objects.create(Hospital_name=name)
-        return render(request,'../templates/loginFolder/login.html')
+        return redirect(reverse('login'))
     return render(request,'../templates/loginFolder/registration.html')
 
 @login_required
