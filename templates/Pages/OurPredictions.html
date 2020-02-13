@@ -3,7 +3,7 @@
 {% block body %}
 {% for i in list %}
 <h2 class="mx-3">Prediction for Dept No : {{ Pro }} , Day : {{ Day }}  <span class="badge
-        badge-secondary">is {{ i }} hours</span></h2>
+        badge-secondary">{{ i.time }} is {{ i }} hours</span></h2>
     <br>
 {% endfor %}
 {% endblock body %}

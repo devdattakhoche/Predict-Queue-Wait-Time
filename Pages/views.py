@@ -77,7 +77,7 @@ def CompleteProcess(request, Hospital_id):
             created_queue_hour = created_queue_hour + value[0]
             print(created_queue_hour)
 
-            if created_queue_hour >= 18:
+            if created_queue_hour >= 18 or created_queue_hour<8:
                 break
 
             counter += 1
@@ -195,6 +195,7 @@ def Department(request, Hospital_id, UID):
         DepartmentDict['Uid'] = str(i.Uid)
         DepartmentDict['Type'] = str(i.Type)
         DepartmentDict['Hospital_id'] = str(i.Hospital_id)
+        DepartmentDict['Desc'] = str(i.Desc)
         DepartmentList.append(DepartmentDict)
 
     for i in y:
@@ -251,6 +252,7 @@ def Department(request, Hospital_id, UID):
 def Predict(request):
 
     z = None
+    
     print("Printed in Views.Predict")
     params = {'pro': z}
     if request.method == "POST":
@@ -296,13 +298,16 @@ def Predict(request):
         z = model.predict(prediction_parameter)[0]
         z = "{0:.2f}".format(round(z, 2))
 
-        params = {'pro': z}
-
+        img = Dept.objects.get(Uid=Queue_number)
+        print(img.route_image)
+        params = {'pro': z , 'route' : img.route_image}
+ 
     return render(request, 'Pages/Machine_learning.html', params)
 
 
 def OurPredictions(request, Hospital_id, UID):
     print("Printed in Views.OurPredictions")
+    UID=int(UID)
     Date = str(date.today())
     year, month, day = (int(i) for i in Date.split('-'))
     dayNumber = calendar.weekday(year, month, day)
@@ -329,12 +334,21 @@ def OurPredictions(request, Hospital_id, UID):
             data['weekdays'] == dayNumber)]['Service_rate'].min()
         waiting_queue = data[(data['Created_queue_hours'] == Hour) & (
             data['weekdays'] == dayNumber)]['Number_of_wating_queue'].max()
-        prediction_list = [UID, shift, Hour,
+        prediction_list = [UID*100, shift, Hour,
                            waiting_queue, arrival_rate, service_rate, dayNumber]
         prediction_parameter = ([prediction_list])
         z = model.predict(prediction_parameter)[0]
         z = "{0:.2f}".format(round(z, 2))
         zlist.append(z)
+    time = list(x for x in range(8,19))
+    print(time)
+
+    # for i in zlist:
+    #     time_predict = {}
+    #     time_predict["predict"] = i
+    #     time_predict['time'] = time[i]
+    #     final.append(time_predict)
+        
     params = {'Pro': UID, 'Day': days[dayNumber],
-              'list': zlist, 'HosId_id': Hospital_id}
+              'list': zlist, 'HosId_id': Hospital_id,'time':time}
     return render(request, 'Pages/OurPredictions.html', params)

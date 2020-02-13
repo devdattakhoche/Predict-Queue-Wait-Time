@@ -3,10 +3,10 @@
 {% block body %}
 
 {% if counter == count %}
-<h1>Your predicted value is {{ value }} hours for first {{ counter }} department</h1>
+<h2 class="mx-3 my-3 ml-3">The total time that we have predicted is {{ value }} hours for first {{ counter }} department</h2>
 {% else %}
-<h1>Your prediction value for {{ counter }} department is {{ value }} hours </h1>
-<h1>Your turn wont come for {{ diff }} departments </h1>
+<h2 class="mx-3 my-3 ml-3">The total time that we have predicted for {{ counter }} department is {{ value }} hours </h2>
+<h2 class="mx-3 my-3 ml-3">You won't be able to reach {{ diff }} department today. You may choose to come for this department some other day </h2>
 {% endif %}
     
 {% endblock body %}

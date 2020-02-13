@@ -1,5 +1,7 @@
 {% extends 'Pages/Extended.html' %}
 
 {% block Hospital %}
-{{ Pro.Hospital_name }}
+{% for j in Hos %}
+<h1>Welcome to {{j.Hospital_name}} predictions page</h1>
+{% endfor %}
 {% endblock Hospital %} 
