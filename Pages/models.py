@@ -1,7 +1,5 @@
 from django.db import models
 
-
-
 class Hospital(models.Model):
     Hospital_id = models.IntegerField(
         primary_key=True, unique=True, null=False, blank=False)
