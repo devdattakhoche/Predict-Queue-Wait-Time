@@ -44,6 +44,7 @@ def registration(request):
         user = User.objects.create_user(username=name,password=password)
         print(name,password,image)
         hospital_instance = Hospital.objects.create(Hospital_name=name)
+        return render(request,'../templates/loginFolder/login.html')
     return render(request,'../templates/loginFolder/registration.html')
 
 @login_required
