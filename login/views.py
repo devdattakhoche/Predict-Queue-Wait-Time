@@ -35,4 +35,5 @@ def registration(request):
         password = request.POST.get('password')
         user = User.objects.create_user(username=name,password=password)
         print(name,password)
+        return redirect(reverse('login'))
     return render(request,'../templates/loginFolder/registration.html')
