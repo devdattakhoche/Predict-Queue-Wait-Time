@@ -23,7 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('Pages.urls')),
     path('',include('Feedback.urls')),
+    path('staff/',include('login.urls')),
 ]
+
 if settings.DEBUG:
         urlpatterns += staticfiles_urlpatterns()
         urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

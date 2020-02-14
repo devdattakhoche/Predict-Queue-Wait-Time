@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script>
+        let i = 2;
+    window.onload = function(){
+    document.getElementById('add-new-person').onclick = function () {
+    let template = `
+        <h3>Department ${i} :</h3>
+        <p>
+            <label><strong>Name</strong></label><br>
+            <input class="rounded" name="Department[${i}][name]" required>
+        </p>
+`;
+
+    let container = document.getElementById('people-container');
+    let div = document.createElement('div');
+    div.innerHTML = template;
+    container.appendChild(div);
+    i++;
+
+    document.getElementById('hidden').value = i
+}
+    }
+    </script>
+</head>
+<body>
+    {% url 'index' as index %}
+    {% url 'view' as view %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <a class="navbar-brand" href="#">Staff Admin</a>
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link {% if request.path == index %}active{% endif %}" href="{{ index }}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link {% if request.path == view %}}active{% endif %}" href="{{ view }}">Departments</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="navbar-brand" href="{% url 'logout' %}">Logout</a>
+            </li>
+            {% endif %}
+          </ul>
+          <!-- <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form> -->
+        </div>
+      </nav>
+    <div>      
+      <div class="shadow-lg mx-3 my-3 p-3 mb-5 bg-white rounded">
+      <div class="row mx-3 my-3 p-3 mb-2 bg-light text-black rounded ">
+        <div class="container">
+          {% if user.is_authenticated %}
+          <h1 style="margin-top: 20px; color:#000080;">Add New Departments</h1>
+          <br><br>
+          <form method="post" action=''>
+              {% csrf_token %}
+              <div id='people-container' class='people-container'>
+                  <h3>Department 1 :</h3>
+                  <p><label><strong>Name</strong></label><br><input class="rounded" name="Department[1][name]" required> </p>
+              </div>
+              <a href="javascript:;" id="add-new-person" class="add-new-person" style="color: red;">Add More Department</a>              
+              <input class="rounded" type='hidden' id='hidden' value=2 name='srajan1'required>              
+              <p><br><input class="rounded bg-primary text-light btn btn-primary btn-lg" data-toggle="button" aria-pressed="false" autocomplete="off" style="padding: 5px 35px;" type="submit" value="Save"></p>
+          </form>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    {% else %}
+    <li><a class="navbar-link" href="{% url 'login' %}">Login</a></li>
+{% endif %}
+</body>
+</html>

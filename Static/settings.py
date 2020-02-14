@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'Pages',
     'widget_tweaks',
     'Feedback',
+    'login',
 ]
 
 MIDDLEWARE = [

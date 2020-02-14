@@ -1,0 +1,102 @@
+{% extends 'loginFolder/Base.html' %}
+
+{% block title %}
+  View
+{% endblock title %}
+  
+{% block js %}
+<script>
+        let i = 2;
+    window.onload = function(){
+    document.getElementById('add-new-person').onclick = function () {
+    let template = `
+        <h3>Department ${i}:</h3>
+        <p>
+            <label>Name</label><br>
+            <input name="Department[${i}][name]">
+        </p>
+`;
+
+    let container = document.getElementById('people-container');
+    let div = document.createElement('div');
+    div.innerHTML = template;
+    container.appendChild(div);
+    i++;
+
+    document.getElementById('hidden').value = i
+}
+    }
+    </script>
+    {% endblock js %}
+
+
+{% block body %}
+  
+
+  
+    {% url 'index' as index %}
+    {% url 'view' as view %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <a class="navbar-brand" href="#">Staff Admin</a>
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link {% if request.path == index %}active{% endif %}" href="{{ index }}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link {% if request.path == view %}}active{% endif %}" href="{{ view }}">Departments <span class="sr-only">(current)</span></a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="navbar-brand" href="{% url 'logout' %}">Logout</a>
+            </li>
+            {% endif %}
+          </ul>
+          <!-- <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form> -->
+        </div>
+      </nav>
+      <div>
+        {% if user.is_authenticated %}
+        <div class="shadow-lg mx-3 my-3 p-3 mb-5 bg-white rounded">
+          <div class="row mx-3 my-3 p-3 mb-2 bg-light text-black rounded ">
+          <div style="margin-left: 50px; margin-top: 20px; margin-bottom: 20px; color:#000080">
+            <h1>List of Departments in your hospital</h1>
+          </div>
+      
+              {% for i in dept %}
+              <div class="container">
+                  <div class="row my-2">
+                      <form action="" method="POST">
+                          {% csrf_token %}
+                          <div class="col"></div>
+                          <div class="col">
+                              <h1>Department Name: {{i.Type}}</h1>
+                              <br>
+                          </div>
+                          <div class="col">
+                            <h2>Department Uid: {{i.Uid}}</h2>
+                            <br>
+                          </div>
+                          <input type="hidden" name="object_id" value="{{i.Uid}}">
+                          <input class="btn btn-success mx-2" name="form_approved" type="submit" value="Update">
+                          <input class="btn btn-danger mx-2" name="form_rejected" type="submit" value="Delete">
+                          <!--Added attribute name="form_rejected"-->
+                      </form>
+                  </div>
+              </div>
+              {% endfor %}
+          </div>
+      </div>
+        
+    </div>
+
+    {% else %}
+    <li><a class="navbar-link" href="{% url 'login' %}">Login</a></li>
+{% endif %}
+{% endblock body %}
