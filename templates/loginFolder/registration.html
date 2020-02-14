@@ -4,32 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script>
-        function checkPassword(form) { 
-                password1 = form.password.value; 
-                password2 = form.confirm_password.value; 
-  
-                // If password not entered 
-                if (password1 == '') 
-                    alert ("Please enter Password"); 
-                      
-                // If confirm password not entered 
-                else if (password2 == '') 
-                    alert ("Please enter confirm password"); 
-                      
-                // If Not same return False.     
-                else if (password1 != password2) { 
-                    alert ("\nPassword did not match: Please try again...") 
-                    return false; 
-                } 
-  
-                // If same return True. 
-                else{ 
-                    alert("Password Match!") 
-                    return true; 
-                } 
-            }
+        var check = function() {
+                if (document.getElementById('password').value ==
+                  document.getElementById('confirm_password').value) {
+                  document.getElementById('message').style.color = 'green';
+                  document.getElementById('message').innerHTML = 'Passwords match';
+                } else {
+                  document.getElementById('message').style.color = 'red';
+                  document.getElementById('message').innerHTML = 'Passwords do not match';
+                }
+              }
     </script>
 </head>
 <body>
@@ -52,13 +39,14 @@
                                         <div class="form-group row">
                                           <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
                                           <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required onkeyup='check();'>
                                           </div>
                                         </div>
                                         <div class="form-group row">
                                                 <label for="inputPassword3" class="col-sm-2 col-form-label">Confirm Password</label>
                                                 <div class="col-sm-10">
-                                                  <input type="password" class="form-control" name ="confirm_password" id="confirm_password" placeholder="Confirm Password" required>
+                                                  <input type="password" class="form-control" name ="confirm_password" id="confirm_password" placeholder="Confirm Password" required onkeyup='check();'>
+                                                  <span id='message'></span>
                                                 </div>
                                         </div>
                                         <div class="form-group row">
@@ -77,7 +65,7 @@
 
                                         <div class="form-group">
                                                 <p class="text-left">Existing User? <a href="{{ login }}" id="signup">Login Here</a></p>
-                                             </div>
+                                        </div>
                                       </form>
                         </div>
                 </div>
