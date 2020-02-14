@@ -13,7 +13,7 @@ def index(request):
         for i in range(1,int(request.POST['srajan1'])):
             Department_name = request.POST['Department[{}][name]'.format(i)]
             Dept_instance = Dept.objects.create(Type=Department_name,Hospital_id=Hospital_id)
-    return render(request,'../templates/loginFolder/index.html')
+    return render(request,'loginFolder/index.html')
 
 @login_required
 def user_logout(request):
@@ -28,13 +28,13 @@ def login(request):
         if user:
             if user.is_active:
                 auth_login(request,user)
-                return HttpResponseRedirect(reverse('index'))
+                return redirect(reverse('index'))
             else:
                 return HttpResponse("Your account was inactive.")
         else:
             print("Someone tried to login and failed.")
             
-    return render(request,'../templates/loginFolder/login.html')
+    return render(request,'loginFolder/login.html')
 
 def registration(request):
     if request.method=='POST':
@@ -45,20 +45,21 @@ def registration(request):
         print(name,password,image)
         hospital_instance = Hospital.objects.create(Hospital_name=name)
         return redirect(reverse('login'))
-    return render(request,'../templates/loginFolder/registration.html')
+    return render(request,'loginFolder/registration.html')
 
 @login_required
 def department_delete(request):
     Hospital_id = Hospital.objects.get(Hospital_name=request.user.username)
     x = Dept.objects.filter(Hospital_id=Hospital_id)
+    print(Hospital_id)
     params = {'dept':x,'hospital_id':Hospital_id}
     if request.method == 'POST':
         print(request.POST['hidden'])
         y = Dept.objects.get(Uid=request.POST['hidden'])
         y.delete()
-        return render(request,'../templates/loginFolder/delete.html',params)
+        return render(request,'loginFolder/delete.html',params)
 
-    return render(request,'../templates/loginFolder/delete.html',params)
+    return render(request,'loginFolder/delete.html',params)
 
 @login_required
 def department_update(request):
@@ -71,11 +72,24 @@ def department_update(request):
     x = Dept.objects.filter(Hospital_id=Hospital_id)
     params = {'dept':x,'hospital_id':Hospital_id}
     
-    return render(request,'../templates/loginFolder/update.html',params)
+    return redirect(reverse('view'))
 
 @login_required
 def update_form(request,slug):
-    return render(request,'../templates/loginFolder/update_form.html',{'slug':slug})
-
+    return render(request,'loginFolder/update_form.html',{'slug':slug})
+@login_required
 def view_department(request):
-    return render(request, '../templates/loginFolder/department.html')
+    Hospital_id = Hospital.objects.get(Hospital_name=request.user.username)
+    x = Dept.objects.filter(Hospital_id=Hospital_id)
+    
+    params = {'dept':x,'hospital_id':Hospital_id}
+    if 'form_rejected' in request.POST and request.method == "POST":
+        # print(reverse('update_form',args=request.POST['object_id']))
+        print(request.POST['object_id'])
+        y = Dept.objects.get(Uid=request.POST['object_id'])
+        y.delete()
+        return render(request,'loginFolder/department.html',params)
+    if 'form_approved' in request.POST and request.method == "POST":
+        
+        return redirect(reverse('update_form',args=[request.POST['object_id']]))
+    return render(request, 'loginFolder/department.html',params)
