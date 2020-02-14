@@ -1,0 +1,27 @@
+{% extends "Feedback/Base.html" %}
+{% block title %}
+  Generate
+{% endblock title %}
+{% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<h1><button class="btn btn-primary">Generate Token</button></h1>
+<script>
+    $(document).ready(function(){
+      $("button").click(function(){
+        $.post("{% url 'generate' %}",
+        {
+            csrf_token: "{{ csrf_token  }}",
+        },
+        function(data,status){
+            var token = data.s
+            $("#token").html("<h1 id='token'>Token generated is "+ token+"</h1>")
+            console.log(token)
+        });
+      });
+    });
+
+    </script>
+    <h1 id="token">Token generated is s</h1>
+{% endblock body %}
+    
