@@ -116,7 +116,7 @@ def Hospitals(request):
     params = {'Pro': x, 'filter': Hospital_filter}
     if request.method == "POST":
         No = request.POST.get('Hospital_id')
-        return redirect('http://localhost:8000/Hospital/'+No+'/Dashboard')
+        return redirect('http://localhost:8000/Hospital/'+No+'/Single')
     return render(request, 'Pages/Hospitals.html', params)
 
 
@@ -124,7 +124,7 @@ def Dashboard(request, Hospital_id):
     print("Printed in Views.Dashboard")
     x = Hospital.objects.get(Hospital_id=Hospital_id)
     params = {'HosId_id': x}
-    return render(request, 'Pages/Dashboard.html', params)
+    return render(request, 'Pages/Single.html', params)
 
 
 def Single(request, Hospital_id):
@@ -298,9 +298,9 @@ def Predict(request):
         z = model.predict(prediction_parameter)[0]
         z = "{0:.2f}".format(round(z, 2))
 
-        img = Dept.objects.get(Uid=Queue_number)
-        print(img.route_image)
-        params = {'pro': z , 'route' : img.route_image}
+        # img = Dept.objects.get(Uid=Queue_number)
+        # print(img.route_image)
+        params = {'pro': z }
  
     return render(request, 'Pages/Machine_learning.html', params)
 
@@ -339,6 +339,9 @@ def OurPredictions(request, Hospital_id, UID):
         prediction_parameter = ([prediction_list])
         z = model.predict(prediction_parameter)[0]
         z = "{0:.2f}".format(round(z, 2))
+        # hours = str(math.floor((z*60)/60))
+        # mins = str((z*60)%60)
+        # z = hours+mins
         zlist.append(z)
     time = list(x for x in range(8,19))
     print(time)
@@ -347,8 +350,18 @@ def OurPredictions(request, Hospital_id, UID):
     #     time_predict = {}
     #     time_predict["predict"] = i
     #     time_predict['time'] = time[i]
-    #     final.append(time_predict)
-        
+    
+    final = []
+    j = 0
+    #      final.append(time_predict)
+    for i in range(8,18):
+        dict2 = {}
+        dict2['time'] = i
+        dict2['pred'] = zlist[j]
+        j+=1
+        final.append(dict2)
+
+
     params = {'Pro': UID, 'Day': days[dayNumber],
-              'list': zlist, 'HosId_id': Hospital_id,'time':time}
+              'list': final, 'HosId_id': Hospital_id,'time':time,'range':dict2}
     return render(request, 'Pages/OurPredictions.html', params)

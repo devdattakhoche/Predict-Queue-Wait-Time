@@ -13,7 +13,7 @@ class Hospital(models.Model):
 
 class Dept(models.Model):
     class Meta:
-        unique_together = (('Uid', 'Hospital_id'),)
+        unique_together = (('Uid', 'Hospital_id'))
 
     Uid = models.IntegerField(primary_key=True, unique=True, null=False, blank=False)
     Type = models.CharField(max_length=20, default='')
