@@ -1,0 +1,44 @@
+{% extends "Feedback/Base.html" %}
+{% block title %}
+  Generate
+{% endblock title %}
+{% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<div class="container my-5 text-center" >
+<div class="card text-center">
+  <div class="card-header">
+    Featured
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Generate Token for futher process</h5>
+    <p class="card-text">This will help you for feedback and other systems as well.</p>
+    <a href="#" class="btn btn-primary">Generate Token</a>
+  </div>
+  <div class="card-footer text-muted">
+    Token is valid for 2 days
+  </div>
+  <h1 id="token">Token generated is s</h1>
+</div>
+</div>
+<!-- <h1><button class="btn btn-primary">Generate Token</button></h1> -->
+
+
+<script>
+    $(document).ready(function(){
+      $("a").click(function(){
+        $.post("{% url 'generate' %}",
+        {
+            csrf_token: "{{ csrf_token  }}",
+        },
+        function(data,status){
+            var token = data.s
+            $("#token").html("<h1 id='token'>Token generated is "+ token+"</h1>")
+            console.log(token)
+        });
+      });
+    });
+
+    </script>
+    <!-- <h1 id="token">Token generated is s</h1> -->
+{% endblock body %}
+    

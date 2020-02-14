@@ -19,7 +19,7 @@ import math
 print("I have printed globally")
 # model = joblib.load('rf.pkl')
 # data = joblib.load('data.pkl')
-flag = 0
+flag = 1
 print("flag = ",flag)
 def Documentation(request):
     print("Printed in ViewsDocumentation")
