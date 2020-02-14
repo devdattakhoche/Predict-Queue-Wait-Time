@@ -41,7 +41,8 @@
                 {% csrf_token %}
                 <div id='people-container' class='people-container'>
                     <h3 style="color:#000080;">Department :</h3>
-                    <p><label><strong>Name</strong></label><br><input class="rounded" name="name"> </p>
+                    <p><label><strong>Department Number</strong></label><br><input class="rounded" name="number"> </p>
+                    <p><label><strong>Department Name</strong></label><br><input class="rounded" name="name"> </p>
                 </div>
 
                 <input class="rounded" type='hidden' id='hidden' value='{{ slug }}' name='hidden' required>
