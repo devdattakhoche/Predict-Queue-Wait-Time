@@ -124,7 +124,7 @@ def Dashboard(request, Hospital_id):
     print("Printed in Views.Dashboard")
     x = Hospital.objects.get(Hospital_id=Hospital_id)
     params = {'HosId_id': x}
-    return render(request, 'Pages/Single.html', params)
+    return redirect( 'http://localhost:8000/Hospital/'+Hospital_id+'/Single')
 
 
 def Single(request, Hospital_id):
