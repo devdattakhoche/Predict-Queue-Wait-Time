@@ -24,7 +24,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" >Patient Id</span>
                     </div>
-                    <input type="text" id="Uid" name="Uid" class="form-control"  aria-describedby="basic-addon3">
+                    <input type="text" id="Uid" placeholder="Token_id" name="Uid" class="form-control"  aria-describedby="basic-addon3">
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -36,7 +36,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" >Name</span>
                     </div>
-                    <input type="text" name="Name" class="form-control" id="Name"  aria-describedby="basic-addon3">
+                    <input type="text" name="Name" placeholder="Patient Name" class="form-control" id="Name"  aria-describedby="basic-addon3">
                 </div>
                 <!--Iteration of for loop for options-->
                 <div class="input-group mb-3">
@@ -54,7 +54,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" >Doctor Name</span>
                     </div>
-                    <input type="text" class="form-control" name="Doctor" id="Doctor" aria-describedby="basic-addon3">
+                    <input type="text" placeholder='Personal Doc'class="form-control" name="Doctor" id="Doctor" aria-describedby="basic-addon3">
                 </div>
                 <!-- <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -64,44 +64,41 @@
                 </div> -->
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <span class="input-group-text">Hours and Minutes</span>
+                      <span class="input-group-text">Waiting Duration</span>
                     </div>
-                    <input type="number" id="waiting_hour" name = "Hour" aria-label="First name" class="form-control">
-                    <input type="number" id="waiting_Mins" name="Mins" aria-label="Last name" class="form-control">
+                    <input type="number" id="waiting_hour" placeholder="Hours" name = "Hour" aria-label="First name" class="form-control">
+                    <input type="number" id="waiting_Mins" placeholder="Minutes" name="Mins" aria-label="Last name" class="form-control">
                   </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" >Arrival rate</span>
                     </div>
-                    <input type="number" id="Arrival" class="form-control" name="Arrival" aria-describedby="basic-addon3">
+                    <input type="number" placeholder="Arrival time per 10 min" id="Arrival" class="form-control" name="Arrival" aria-describedby="basic-addon3">
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" >Service rate</span>
                     </div>
-                    <input type="number" name="Service" id="Service" class="form-control"  aria-describedby="basic-addon3">
+                    <input type="number" placeholder="Service time per 10 min" name="Service" id="Service" class="form-control"  aria-describedby="basic-addon3">
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" >No of queue waiting</span>
+                        <span class="input-group-text" >Number of queue waiting</span>
                     </div>
-                    <input type="number" name="Noqueue" class="form-control" id="Noqueue" aria-describedby="basic-addon3">
+                    <input type="number" placeholder="Number of people waiting ahead" name="Noqueue" class="form-control" id="Noqueue" aria-describedby="basic-addon3">
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" >Queue hours</span>
                     </div>
-                    <input type="number"  name="Qhour" class="form-control" id="Qhour" aria-describedby="basic-addon3">
+                    <input type="number" placeholder="Hour of the day"  name="Qhour" class="form-control" id="Qhour" aria-describedby="basic-addon3">
                 </div>
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                  <label class="form-check-label" for="exampleCheck1">Is Our Pediction war Accurate</label>
-                </div>
+               
                 <button type="submit" id="submit1" class="btn btn-primary my-3">Submit</button>
               </form>
               
 
-<h1 id="token"></h1>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 
@@ -109,8 +106,9 @@
         
         i =1;
         $("#submit1").click(function(e){
-        $('input').each(function() {
             var isvalid=1;
+        $('input').each(function() {
+            
             i=i+1
             console.log(i)
             console.log($(this).val())

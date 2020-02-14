@@ -46,7 +46,7 @@ def generate(request):
 def feedback(request):
     # Deparments = Dept.objects.filter(Hospital_id=slug)
     # params = {'dept':Departments}
-    params = {}
+    # params = {}
 
     global flag
     if request.is_ajax():
@@ -86,12 +86,12 @@ def feedback(request):
         if obj == None:
             print("I am in if")
             dict = {'pro':'wrong user'}
-            return render(request,'Feedback/index.html',dict,params)
+            return render(request,'Feedback/index.html',dict)
         else:
             if Date!=obj.Date:
                 Feed.objects.filter(Expiry=Date).delete()
                 print(Date,obj.Date)
-                return render(request,'Feedback/index.html',params)
+                return render(request,'Feedback/index.html')
             else:
                 x=list(Date.split("-"))
                 x = x[2]+'/'+x[1]+'/'+x[0]
@@ -125,7 +125,7 @@ def feedback(request):
             if token_generation >=3:
                 Feed.objects.filter(Expiry=Date).delete()
                     
-            return render(request,'Feedback/succcess.html',dict,params)
-    return render(request,'Feedback/index.html',params)
+            return render(request,'Feedback/succcess.html',dict)
+    return render(request,'Feedback/index.html')
 
     

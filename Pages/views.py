@@ -116,7 +116,7 @@ def Hospitals(request):
     params = {'Pro': x, 'filter': Hospital_filter}
     if request.method == "POST":
         No = request.POST.get('Hospital_id')
-        return redirect('http://localhost:8000/Hospital/'+No+'/Dashboard')
+        return redirect('http://localhost:8000/Hospital/'+No+'/Single')
     return render(request, 'Pages/Hospitals.html', params)
 
 
@@ -124,7 +124,7 @@ def Dashboard(request, Hospital_id):
     print("Printed in Views.Dashboard")
     x = Hospital.objects.get(Hospital_id=Hospital_id)
     params = {'HosId_id': x}
-    return render(request, 'Pages/Dashboard.html', params)
+    return render(request, 'Pages/Single.html', params)
 
 
 def Single(request, Hospital_id):
