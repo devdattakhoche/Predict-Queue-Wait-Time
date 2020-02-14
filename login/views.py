@@ -41,6 +41,9 @@ def registration(request):
         name = request.POST.get('Hospital_name')
         password = request.POST.get('password')
         image = request.POST.get('image123')
+
+        print(request.FILES)
+
         user = User.objects.create_user(username=name,password=password)
         print(name,password,image)
         hospital_instance = Hospital.objects.create(Hospital_name=name)
