@@ -76,3 +76,6 @@ def department_update(request):
 @login_required
 def update_form(request,slug):
     return render(request,'../templates/loginFolder/update_form.html',{'slug':slug})
+
+def view_department(request):
+    return render(request, '../templates/loginFolder/department.html')

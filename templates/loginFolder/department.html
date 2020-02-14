@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Department</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script>
+        let i = 2;
+    window.onload = function(){
+    document.getElementById('add-new-person').onclick = function () {
+    let template = `
+        <h3>Department ${i}:</h3>
+        <p>
+            <label>Name</label><br>
+            <input name="Department[${i}][name]">
+        </p>
+`;
+
+    let container = document.getElementById('people-container');
+    let div = document.createElement('div');
+    div.innerHTML = template;
+    container.appendChild(div);
+    i++;
+
+    document.getElementById('hidden').value = i
+}
+    }
+    </script>
+</head>
+<body>
+    {% url 'index' as index %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <a class="navbar-brand" href="#">Staff Admin</a>
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link {% if request.path == index %}active{% endif %}" href="{{ index }}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+          </ul>
+          <!-- <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form> -->
+        </div>
+      </nav>
+      <div>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+            <li><a href="{% url 'delete' %}">Delete</a></li>
+            <li><a href="{% url 'update' %}">Update</a></li>
+        
+    </div>
+
+    {% else %}
+    <li><a class="navbar-link" href="{% url 'login' %}">Login</a></li>
+{% endif %}
+</body>
+</html>
