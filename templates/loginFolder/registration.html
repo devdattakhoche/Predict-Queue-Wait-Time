@@ -5,6 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script>
+        function checkPassword(form) { 
+                password1 = form.password.value; 
+                password2 = form.confirm_password.value; 
+  
+                // If password not entered 
+                if (password1 == '') 
+                    alert ("Please enter Password"); 
+                      
+                // If confirm password not entered 
+                else if (password2 == '') 
+                    alert ("Please enter confirm password"); 
+                      
+                // If Not same return False.     
+                else if (password1 != password2) { 
+                    alert ("\nPassword did not match: Please try again...") 
+                    return false; 
+                } 
+  
+                // If same return True. 
+                else{ 
+                    alert("Password Match!") 
+                    return true; 
+                } 
+            }
+    </script>
 </head>
 <body>
         {% url 'login' as login %}
@@ -16,7 +42,7 @@
                         Hospital Registration
                         </div>
                         <div class="card-body rounded">
-                                <form>
+                                <form onSubmit = "return checkPassword(this)">
                                         <div class="form-group row">
                                           <label for="inputEmail3" class="col-sm-2 col-form-label">Hospital Name</label>
                                           <div class="col-sm-10">
@@ -32,7 +58,7 @@
                                         <div class="form-group row">
                                                 <label for="inputPassword3" class="col-sm-2 col-form-label">Confirm Password</label>
                                                 <div class="col-sm-10">
-                                                  <input type="password" class="form-control" id="confirm_password" placeholder="Confirm Password" required>
+                                                  <input type="password" class="form-control" name ="confirm_password" id="confirm_password" placeholder="Confirm Password" required>
                                                 </div>
                                         </div>
                                         <div class="form-group row">
