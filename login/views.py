@@ -11,8 +11,9 @@ def index(request):
     if request.method=='POST':
         Hospital_id = Hospital.objects.get(Hospital_name=request.user.username)
         for i in range(1,int(request.POST['srajan1'])):
+            Department_number = request.POST['Department[{}][number]'.format(i)]
             Department_name = request.POST['Department[{}][name]'.format(i)]
-            Dept_instance = Dept.objects.create(Type=Department_name,Hospital_id=Hospital_id)
+            Dept_instance = Dept.objects.create(Uid=Department_number,Type=Department_name,Hospital_id=Hospital_id)
     return render(request,'loginFolder/index.html')
 
 @login_required
@@ -68,6 +69,7 @@ def department_delete(request):
 def department_update(request):
     if request.method == 'POST':
         x = Dept.objects.get(Uid=request.POST['hidden'])
+        x.Uid = request.POST['number']
         x.Type = request.POST['name']
         x.save()
 
@@ -80,6 +82,7 @@ def department_update(request):
 @login_required
 def update_form(request,slug):
     return render(request,'loginFolder/update_form.html',{'slug':slug})
+
 @login_required
 def view_department(request):
     Hospital_id = Hospital.objects.get(Hospital_name=request.user.username)
