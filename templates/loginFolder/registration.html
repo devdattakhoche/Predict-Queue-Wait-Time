@@ -4,56 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
-    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-    <form class="form-horizontal" action='' method="POST">
+        {% url 'login' as login %}
+        <form class="form-horizontal" action='' method="POST">
         {% csrf_token %}
-        <fieldset>
-            <div id="legend">
-              <legend class="">Register for your hospital</legend>
-            </div>
-            <div class="control-group">
-              <!-- Username -->
-              <label class="control-label"  for="username">Username</label>
-              <div class="controls">
-                <input type="text" id="" name="Hospital_name" placeholder="Hospital Name" class="input-xlarge" required>
-              </div>
-            </div>
-         
-            <div class="control-group">
-              <!-- Password-->
-              <label class="control-label" for="password">Password</label>
-              <div class="controls">
-                <input type="password" id="password" name="password" placeholder="Password" class="input-xlarge" required>
-              </div>
-            </div>
-         
-            <div class="control-group">
-              <!-- Password -->
-              <label class="control-label"  for="password_confirm">Confirm Password</label>
-              <div class="controls">
-                <input type="password" id="password_confirm" name="password_confirm" placeholder="Confirm Password" class="input-xlarge" required>
-              </div>
-            </div>
+        <div style="padding-top: 150px; margin-left: 300px; margin-right: 300px;">
+                <div class="card text-center">
+                        <div class="card-header bg-primary text-light font-weight-bold" style = "font-size :larger">
+                        Hospital Registration
+                        </div>
+                        <div class="card-body rounded">
+                                <form>
+                                        <div class="form-group row">
+                                          <label for="inputEmail3" class="col-sm-2 col-form-label">Hospital Name</label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="Hospital_name" name="Hospital_name" placeholder="Hospital Name" required>
+                                          </div>
+                                        </div>
+                                        <div class="form-group row">
+                                          <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                                          <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                          </div>
+                                        </div>
+                                        <div class="form-group row">
+                                                <label for="inputPassword3" class="col-sm-2 col-form-label">Confirm Password</label>
+                                                <div class="col-sm-10">
+                                                  <input type="password" class="form-control" id="confirm_password" placeholder="Confirm Password" required>
+                                                </div>
+                                        </div>
+                                        <div class="form-group row">
+                                                <label for="inputPassword3" class="col-sm-2 col-form-label">Hospital Image</label>
+                                                <div class="controls">
+                                                        <input type="file" id="image123" name="image123" placeholder="image" class="input-xlarge rounded" required>
+                                                </div>
+                                        </div>
+                                        
+                                        
+                                        <div class="form-group row">
+                                          <div class="col-sm-10">
+                                            <button type="submit" class="btn btn-primary btn-lg" data-toggle="button" aria-pressed="false" autocomplete="off" style="padding: 5px 35px;">Register</button>
+                                          </div>
+                                        </div>
 
-            <div class="control-group">
-                <label class="control-label"  for="password_confirm">Hospital Photo</label>
-                <div class="controls">
-                  <input type="file" id="something1" name="image123" placeholder="image" class="input-xlarge" required>
+                                        <div class="form-group">
+                                                <p class="text-left">Existing User? <a href="{{ login }}" id="signup">Login Here</a></p>
+                                             </div>
+                                      </form>
+                        </div>
                 </div>
-            </div>
-         
-            <div class="control-group">
-              <!-- Button -->
-              <div class="controls">
-                <button class="btn btn-success">Register</button>
-              </div>
-            </div>            
-
-          </fieldset>
-    </form>
+        </div>
+        </form>
 </body>
 </html>

@@ -18,7 +18,7 @@ def index(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return redirect(reverse('index'))
+    return redirect(reverse('login'))
 
 def login(request):
     if request.method == 'POST':
