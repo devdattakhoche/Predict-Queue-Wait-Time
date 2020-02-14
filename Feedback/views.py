@@ -1,6 +1,6 @@
 import math
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
+from django.shortcuts import render 
 import random 
 import string
 from django.views.decorators.csrf import csrf_exempt
@@ -104,7 +104,7 @@ def feedback(request):
             y = y + 1
             # obj.save(Feedbacks=str(y))
             Feed.objects.filter(Uid=obj.Uid).update(Feedbacks=y)
-            if obj.Feedbacks == '5':
+            if obj.Feedbacks >= 5:
                 obj.delete()
             print(obj.Expiry)
             newrow = [DeptNo, shift, x, Hour, y, Noqueue, Arrival, Service]
@@ -120,7 +120,7 @@ def feedback(request):
             if token_generation >=3:
                 Feed.objects.filter(Expiry=Date).delete()
                     
-            return render(request,'Feedback/index.html',dict)
+            return render(request,'Feedback/succcess.html',dict)
     return render(request,'Feedback/index.html')
 
     

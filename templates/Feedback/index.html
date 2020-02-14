@@ -12,15 +12,15 @@
   </head>
   <body>
     
-     <div class="container">
-    
-          <div class="card border-primary  mx-auto my-5" style="max-width: 55rem">
-            <div class="card text-center">
+     <!-- <div class="container-fluid shadow"> -->
+    <div class="shadow-lg p-3 mb-5 bg-white rounded">
+          <div class="  shadow p-3 mb-5 bg-white rounded mx-auto my-5" style="max-width: 55rem">
+            <div class=" text-center shadow">
             <h5 class="card-header bg-primary">Feedback form</h5>
             </div>
             <form action="" method="POST" >
                 {% csrf_token %}  
-                <div class="input-group mb-3">
+                <div class="input-group mb-3 my-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" >Patient Id</span>
                     </div>
@@ -97,7 +97,7 @@
                   <input type="checkbox" class="form-check-input" id="exampleCheck1">
                   <label class="form-check-label" for="exampleCheck1">Is Our Pediction war Accurate</label>
                 </div>
-                <button type="submit" id="submit1" class="btn btn-primary">Submit</button>
+                <button type="submit" id="submit1" class="btn btn-primary my-3">Submit</button>
               </form>
               
 
@@ -106,11 +106,11 @@
 <script>
 
     $(document).ready(function(){
-        var isvalid=1;
+        
         i =1;
         $("#submit1").click(function(e){
         $('input').each(function() {
-
+            var isvalid=1;
             i=i+1
             console.log(i)
             console.log($(this).val())
@@ -156,6 +156,7 @@
     </script>
           </div>
     </div>
+    
     <h1>{{ pro }}</h1>
         
     <!-- Optional JavaScript -->
