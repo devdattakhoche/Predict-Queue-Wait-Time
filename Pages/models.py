@@ -4,7 +4,7 @@ class Hospital(models.Model):
     Hospital_id = models.IntegerField(
         primary_key=True, unique=True, null=False, blank=False)
     Hospital_name = models.CharField(max_length=100, default='')
-    Image = models.ImageField(upload_to="Hospital_images/", default="")
+    Image = models.ImageField(upload_to="Hospital_images/", default="Hospital_images/ambani.jpg")
 
     def __str__(self):
         x = str(self.Hospital_id)
@@ -18,7 +18,7 @@ class Dept(models.Model):
     Uid = models.IntegerField(primary_key=True, unique=True, null=False, blank=False)
     Type = models.CharField(max_length=20, default='')
     Desc = models.TextField(default = "Lorem ipsum dolor quo alias asperiores autem!")
-    image = models.ImageField(upload_to="department_images/", default="")    
+    image = models.ImageField(upload_to="department_images/", default="department_images/dept.jpg")    
     # route_image = models.ImageField(upload_to="Department_route", default="")
     Hospital_id = models.ForeignKey(
         Hospital, on_delete=models.CASCADE, default='null')
