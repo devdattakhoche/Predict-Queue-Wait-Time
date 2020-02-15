@@ -298,9 +298,9 @@ def Predict(request):
         z = model.predict(prediction_parameter)[0]
         z = "{0:.2f}".format(round(z, 2))
 
-        img = Dept.objects.get(Uid=Queue_number)
-        print(img.route_image)
-        params = {'pro': z , 'route' : img.route_image}
+        # img = Dept.objects.get(Uid=Queue_number)
+        # print(img.route_image)
+        params = {'pro': z }
  
     return render(request, 'Pages/Machine_learning.html', params)
 
@@ -348,7 +348,16 @@ def OurPredictions(request, Hospital_id, UID):
     #     time_predict["predict"] = i
     #     time_predict['time'] = time[i]
     #     final.append(time_predict)
+
+    final =[]
+    j = 0
+    for i in range(8,18):
+        dict2 = {}
+        dict2['time'] = i
+        dict2['pred'] = zlist[j]
+        j+=1
+        final.append(dict2)
         
     params = {'Pro': UID, 'Day': days[dayNumber],
-              'list': zlist, 'HosId_id': Hospital_id,'time':time}
+              'list': final, 'HosId_id': Hospital_id,'time':time}
     return render(request, 'Pages/OurPredictions.html', params)
