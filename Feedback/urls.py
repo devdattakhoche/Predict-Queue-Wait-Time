@@ -4,4 +4,5 @@ from django.urls import re_path, path
 urlpatterns = [
  path('generate/', views.generate, name='generate'),
  path('feedback/',views.feedback,name = 'feedback'),
+ path('file/',views.file,name = 'file'),
 ]

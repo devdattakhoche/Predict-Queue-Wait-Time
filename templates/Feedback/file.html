@@ -1,0 +1,17 @@
+{% extends "Feedback/Base.html" %}
+
+{% block body %}
+    <form method="POST" action="" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <div class="form-group">
+          <input type="file"
+            class="form-control" name="image" id="" aria-describedby="helpId" placeholder="upload_file">
+          <small id="helpId" class="form-text text-muted">Help text</small>
+          <!-- <input name="" id="" class="btn btn-primary" type="button" placehlder="Submit"/> -->
+          <button type="submit">my button</button>
+        </div>
+    </form>
+    <a href="{{ url }}"> hi</a>
+        
+{% endblock body %}
+    

@@ -8,6 +8,7 @@ import uuid
 from .models import Feed
 from django.http import JsonResponse
 import datetime
+from django.core.files.storage import FileSystemStorage
 import csv
 import os
 import time
@@ -127,5 +128,19 @@ def feedback(request):
                     
             return render(request,'Feedback/succcess.html',dict)
     return render(request,'Feedback/index.html')
+
+def file(request):
+    if request.method  == 'POST':
+        context = {}
+        image = request.FILES['image']
+        fs = FileSystemStorage()
+        name = fs.save(image.name,image)
+        context['url'] = fs.url(name)
+        print(image.name)
+        print(image.size)
+        return render(request,'Feedback/file.html',context)
+    return render(request,'Feedback/file.html')
+
+
 
     
