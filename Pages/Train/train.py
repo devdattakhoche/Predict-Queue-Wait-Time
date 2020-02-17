@@ -10,7 +10,7 @@ import calendar
 import os
 from datetime import date
 import joblib
-# from django.conf import settings
+from django.conf import settings
 import math 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 path = os.path.join(BASE_DIR,'Train\data.csv')
@@ -43,9 +43,9 @@ error = abs(prediction - y_test)
 mape = 100*(error/y_test)
 accuracy = 100 - np.mean(mape)
 print('Accuracy:', round(accuracy, 2), '%.')
-# path = os.path.join(settings.MODEL_ROOT, 'rf')
-# with open(path, 'wb') as file:
-#     joblib.dump(rf, 'rf.pkl')
-#     joblib.dump(data, 'data.pkl')
+path = os.path.join(settings.MODEL_ROOT, 'rf')
+with open(path, 'wb') as file:
+    joblib.dump(rf, 'rf.pkl')
+    joblib.dump(data, 'data.pkl')
 prediction_parameter = ([[101,   2,  14,  40,   4,   2,   6]])
 print(rf.predict(prediction_parameter))

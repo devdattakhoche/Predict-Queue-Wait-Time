@@ -1,8 +1,10 @@
 {% extends "Feedback/Base.html" %}
+{% load static %}
 {% block title %}
   Generate
 {% endblock title %}
 {% block body %}
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <div class="container my-5 text-center" >
 <div class="card text-center">
@@ -17,26 +19,36 @@
   <div class="card-footer text-muted">
     Token is valid for 2 days
   </div>
-  <h1 id="token">Token generated is s</h1>
+  <h1 id="token"></h1>
+  <div id="mydiv" class="text-center">
+  <img src="{% static 'qrcode.png' %}"  style="height: 180px;width: 180px; "/>
+</div>
 </div>
 </div>
 <!-- <h1><button class="btn btn-primary">Generate Token</button></h1> -->
 
-
 <script>
-    $(document).ready(function(){
-      $("a").click(function(){
-        $.post("{% url 'generate' %}",
-        {
-            csrf_token: "{{ csrf_token  }}",
-        },
-        function(data,status){
-            var token = data.s
-            $("#token").html("<h1 id='token'>Token generated is "+ token+"</h1>")
-            console.log(token)
-        });
+  $(document).ready(function(){
+    $("a").click(function(){
+      $.post("{% url 'generate' %}",
+      {
+          csrf_token: "{{ csrf_token  }}",
+      },
+      function(data,status){
+          var token = data.s
+          $("#token").html("<h1 id='token'>Token generated is "+ token+"</h1>")
+          $("#mydiv").show()
+          console.log(token)
       });
     });
+  });
+
+  </script>
+<script>
+    $(document).ready(function(){
+      $("#mydiv").hide()
+        
+      });
 
     </script>
     <!-- <h1 id="token">Token generated is s</h1> -->
